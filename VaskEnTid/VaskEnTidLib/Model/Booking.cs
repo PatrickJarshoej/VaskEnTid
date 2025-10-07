@@ -11,16 +11,16 @@ namespace VaskEnTidLib.Model
     {
         public DateTime DateAndTime {  get; set; }
         public int DomicileID { get; set; }
-        public int MachineID { get; set; }
+        public List<int> MachineIDs { get; set; }
         public TimeOnly Duration { get; set; }
         public double TotalCost { get; set; }
         public int ID { get; set; }
 
-        public Booking(DateTime dateAndTime, int domicileID, int machineID, TimeOnly duration, double totalCost, int id)
+        public Booking(DateTime dateAndTime, int domicileID, List<int> machineIDs, TimeOnly duration, double totalCost, int id)
         {
             DateAndTime = dateAndTime;
             DomicileID = domicileID;
-            MachineID = machineID;
+            MachineIDs = machineIDs;
             Duration = duration;
             TotalCost = totalCost;
             ID = id;
