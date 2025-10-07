@@ -19,11 +19,11 @@ namespace VaskEnTidLib.Model
         {
 
         }
-        public User(string name, string lastName, int iD, int domicileID, string email, string phone)
+        public User(string name, string lastName, int domicileID, string email, string phone)
         {
             Name = name;
             LastName = lastName;
-            ID = iD;
+            ID = 0;
             DomicileID = domicileID;
             Email = email;
             Phone = phone;

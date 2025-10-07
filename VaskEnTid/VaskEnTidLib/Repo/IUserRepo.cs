@@ -10,6 +10,7 @@ namespace VaskEnTidLib.Repo
 {
     public interface IUserRepo
     {
+        public List<User> GetAll();
         public List<User> GetByDomicileID(int domicileID);
         public User GetByID(int id);
         public void Update(User user);
