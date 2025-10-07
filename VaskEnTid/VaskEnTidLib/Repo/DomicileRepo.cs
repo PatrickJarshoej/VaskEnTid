@@ -12,9 +12,11 @@ namespace VaskEnTidLib.Repo
     {
         
         private List<Domicile> _domiciles;
+        private string _connectionString;
         public DomicileRepo(List<Domicile> domiciles)
         {
             _domiciles = domiciles;
+            _connectionString= string.Empty;
         }
         public void AddUserIDByDomID(int userID, int domicileID)
         {
