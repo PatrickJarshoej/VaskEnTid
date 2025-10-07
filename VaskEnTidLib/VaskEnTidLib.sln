@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36518.9 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaskEnTidLib", "VaskEnTidLib\VaskEnTidLib.csproj", "{AA306C6F-EA06-445C-B70F-CA4BD85BBBA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaskEnTidWeb", "VaskEnTidWeb\VaskEnTidWeb.csproj", "{97961F18-E399-4272-8011-10F33F09416C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA306C6F-EA06-445C-B70F-CA4BD85BBBA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA306C6F-EA06-445C-B70F-CA4BD85BBBA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA306C6F-EA06-445C-B70F-CA4BD85BBBA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA306C6F-EA06-445C-B70F-CA4BD85BBBA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97961F18-E399-4272-8011-10F33F09416C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97961F18-E399-4272-8011-10F33F09416C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97961F18-E399-4272-8011-10F33F09416C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97961F18-E399-4272-8011-10F33F09416C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD5417D2-05CD-4B06-84A7-5C93B1E29A10}
+	EndGlobalSection
+EndGlobal
