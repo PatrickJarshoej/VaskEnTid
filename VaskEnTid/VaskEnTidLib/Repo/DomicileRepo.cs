@@ -16,7 +16,7 @@ namespace VaskEnTidLib.Repo
         public DomicileRepo(List<Domicile> domiciles)
         {
             _domiciles = domiciles;
-            _connectionString= "Data Source = mssql15.unoeuro.com; Persist Security Info = True; User ID = arvedlund_com; Password = BdpAFfg62xzDnR3wkcht; Pooling = False; MultipleActiveResultSets = False; Encrypt = False; TrustServerCertificate = False; Application Name = SQL Server Management Studio; Command Timeout = 30";
+            _connectionString= string.Empty;
         }
         public void AddUserIDByDomID(int userID, int domicileID)
         {
