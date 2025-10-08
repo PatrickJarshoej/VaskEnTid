@@ -5,33 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using VaskEnTidLib.Model;
 
-namespace VaskEnTidLib.Repo
+namespace VaskEnTidLib.Service
 {
-    internal class MachineRepo : IMachineRepo
+    public class MachineService
     {
-        public void Add()
+        public void Create(Enum machineType)
         {
-            throw new NotImplementedException();
-        }
 
-        public void DeleteByID()
-        {
-            throw new NotImplementedException();
         }
-
         public List<Machine> GetAll()
         {
             throw new NotImplementedException();
         }
+        public void Update(Machine machine)
+        {
 
-        public Machine GetByID()
+        }
+        public void DeleteByID(int machineID)
+        {
+
+        }
+        public Machine GetByID(int machineID)
         {
             throw new NotImplementedException();
         }
 
-        public void Update()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

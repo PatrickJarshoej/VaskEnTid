@@ -9,7 +9,7 @@ namespace VaskEnTidLib.Model
     
     internal class Domicile
     {
-        public int ID {  get; private set; }
+        public int DomicileID {  get; private set; }
         public List<int> UserIDs { get; private set; }
 
         public string Roadname { get; private set; }
@@ -23,7 +23,7 @@ namespace VaskEnTidLib.Model
 
         public Domicile(string roadname, string postalcode, string floor, string door, string city, string region, string country)
         {
-            ID = 0;
+            DomicileID = 0;
             UserIDs = new List<int> ();
             Roadname = roadname;
             Postalcode = postalcode;

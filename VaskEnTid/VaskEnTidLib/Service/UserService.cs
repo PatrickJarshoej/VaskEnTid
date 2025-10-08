@@ -22,10 +22,9 @@ namespace VaskEnTidLib.Service
         {
 
         }
-        public User CreateUser(string name, string lastName, int domicileID, string email, string phone)
+        public void CreateUser(string name, string lastName, int domicileID, string email, string phone)
         {
             User user = new(name, lastName, domicileID, email, phone);
-            return user;
         }
     }
 }
