@@ -24,7 +24,7 @@ namespace VaskEnTidLib.Service
 
         public void Create(DateTime dateAndTime, int domicileID, List<int> machineIDs)
         {
-            TimeOnly duration = new TimeOnly();
+            TimeSpan duration = new TimeSpan();
             Booking booking = new(dateAndTime,domicileID,machineIDs,duration,0,0);
             _bookingRepo.Add(booking);
         }
@@ -36,7 +36,7 @@ namespace VaskEnTidLib.Service
 
         public void Update(Booking booking)
         {
-            if (_bookingRepo.GetByID(booking.ID) == null) 
+            if (_bookingRepo.GetByID(booking.BookingID) == null) 
             {
                 Debug.WriteLine("Booking does not exist");
             }

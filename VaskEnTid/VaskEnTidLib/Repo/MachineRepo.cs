@@ -7,7 +7,7 @@ using VaskEnTidLib.Model;
 
 namespace VaskEnTidLib.Repo
 {
-    internal class MachineRepo : IMachineRepo
+    public class MachineRepo : IMachineRepo
     {
         public void Add()
         {

@@ -6,18 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using VaskEnTidLib.Model;
 using Microsoft.Data.SqlClient;
+using System.ComponentModel;
 
 namespace VaskEnTidLib.Repo
 {
-    internal class BookingRepo : IBookingRepo
+    public class BookingRepo : IBookingRepo
     {
         private string _connectionString;
         private List<Booking> _bookings;
         public BookingRepo()
         {
-            _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=VaskEnTidDB;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;";
+            _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;";
+            //_bookings = new List<Booking>();
         }
-        public List<Booking> bookings;
+        //public List<Booking> bookings;
         public void Add(Booking booking)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -78,20 +80,27 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-
-                    var command = new SqlCommand("SELECT * FROM Bookings", connection);
+                    Booking booking;
+                    var command = new SqlCommand("SELECT DateAndTime, DomicileID, Duration, TotalCost, BookingID FROM Bookings", connection);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            var booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeOnly)reader["Duration"], (double)reader["TotalCost"], (int)reader["ID"]);
+                            //TimeOnly.Parse({ timespanvalue}.ToString());
+                            decimal fisk = (decimal)reader["TotalCost"];
+                            Debug.WriteLine("hello");
+                            double fisk2 = decimal.ToDouble(fisk);
+                            Debug.WriteLine("hello 2");
+                            booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeSpan)reader["Duration"], fisk2, (int)reader["BookingID"]);
+                            booking.MachineIDs = GetMachineIDs((int)reader["BookingID"], connection, reader);
                             bookings.Add(booking);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine($"you did something wrong");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally
@@ -99,7 +108,40 @@ namespace VaskEnTidLib.Repo
                     connection.Close();
                 }
             }
-            throw new NotImplementedException();
+            return bookings;
+            //throw new NotImplementedException();
+        }
+        internal List<int> GetMachineIDs(int id, SqlConnection connection, SqlDataReader reader)
+        {
+            //connection.Close();
+            List<int> ids = new();
+            Debug.WriteLine(id);
+            var command = new SqlCommand("select m.* from Machines m, MachineIDs mm where mm.BookingID = @ID and m.MachineID = mm.MachineID", connection);
+            command.Parameters.AddWithValue("@ID", id);
+            //connection.Open();
+            try
+            {
+                
+                //using (var reader = command.ExecuteReader())
+                //{
+                    while (reader.Read())
+                    {
+                        Debug.WriteLine((int)reader["MachineID"]);
+                        ids.Add((int)reader["MachineID"]);
+                    }
+                //}
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("You don f up");
+                Debug.WriteLine($"Error: {ex}");
+            }
+            finally
+            {
+                //connection.Close();
+                //connection.Open();
+            }
+            return ids;
         }
 
         public Booking GetByDomicileID(int id)
