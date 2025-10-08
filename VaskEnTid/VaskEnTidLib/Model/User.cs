@@ -11,7 +11,7 @@ namespace VaskEnTidLib.Model
     {
         public string Name { get; private set; }
         public string LastName { get; private set; }
-        public int ID { get; private set; }
+        public int UserID { get; private set; }
         public int DomicileID { get; private set; }
         public string Email { get; private set; }
         public string Phone { get; private set; }
@@ -23,7 +23,15 @@ namespace VaskEnTidLib.Model
         {
             Name = name;
             LastName = lastName;
-            ID = 0;
+            DomicileID = domicileID;
+            Email = email;
+            Phone = phone;
+        }
+        public User(string name, string lastName, int userID, int domicileID, string email, string phone)
+        {
+            Name = name;
+            LastName = lastName;
+            UserID = userID;
             DomicileID = domicileID;
             Email = email;
             Phone = phone;
