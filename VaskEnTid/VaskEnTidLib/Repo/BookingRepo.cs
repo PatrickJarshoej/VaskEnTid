@@ -55,8 +55,8 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("DELETE FROM Bookings WHERE ID = @Id", connection);
-                    command.Parameters.AddWithValue("@Id", id);
+                    var command = new SqlCommand("DELETE FROM Bookings WHERE ID = @ID", connection);
+                    command.Parameters.AddWithValue("@ID", id);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -85,7 +85,7 @@ namespace VaskEnTidLib.Repo
                     {
                         while (reader.Read())
                         {
-                            var booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (int)reader["MachineIDs"], (TimeOnly)reader["Duration"], (double)reader["TotalCost"], (int)reader["ID"]);
+                            var booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeOnly)reader["Duration"], (double)reader["TotalCost"], (int)reader["ID"]);
                             bookings.Add(booking);
                         }
                     }
@@ -99,6 +99,7 @@ namespace VaskEnTidLib.Repo
                     connection.Close();
                 }
             }
+            throw new NotImplementedException();
         }
 
         public Booking GetByDomicileID(int id)
@@ -108,6 +109,32 @@ namespace VaskEnTidLib.Repo
 
         public Booking GetByID(int id)
         {
+            //Booking booking;
+            //using (var connection = new SqlConnection(_connectionString))
+            //{
+            //    try
+            //    {
+            //        var command = new SqlCommand("SELECT * FROM Bookings", connection);
+            //        connection.Open();
+            //        using (var reader = command.ExecuteReader())
+            //        {
+            //            if (reader.Read())
+            //            {
+            //                var booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (int)reader["MachineIDs"], (TimeOnly)reader["Duration"], (double)reader["TotalCost"], (int)reader["ID"]);
+            //                booking = booking
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Debug.WriteLine($"Error: {ex.Message}");
+            //    }
+            //    finally
+            //    {
+            //        connection.Close();
+            //    }
+            //    return booking;
+            //}
             throw new NotImplementedException();
         }
 
