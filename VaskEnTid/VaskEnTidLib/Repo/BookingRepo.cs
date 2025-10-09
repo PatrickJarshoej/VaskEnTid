@@ -16,8 +16,7 @@ namespace VaskEnTidLib.Repo
         private List<Booking> _bookings;
         public BookingRepo()
         {
-            _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=true;";
-            //_bookings = new List<Booking>();
+            _connectionString = "Data Source=mssql15.unoeuro.com; ID=arvedlund_com; password=BdpAFfg62xzDnR3wkcht; Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=true;";
         }
         //public List<Booking> bookings;
         public void Add(Booking booking)
@@ -87,12 +86,7 @@ namespace VaskEnTidLib.Repo
                     {
                         while (reader.Read())
                         {
-                            //TimeOnly.Parse({ timespanvalue}.ToString());
-                            decimal fisk = (decimal)reader["TotalCost"];
-                            Debug.WriteLine("hello");
-                            double fisk2 = decimal.ToDouble(fisk);
-                            Debug.WriteLine("hello 2");
-                            booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeSpan)reader["Duration"], fisk2, (int)reader["BookingID"]);
+                            booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeSpan)reader["Duration"], decimal.ToDouble((decimal)reader["TotalCost"]), (int)reader["BookingID"]);
                             booking.MachineIDs = GetMachineIDs((int)reader["BookingID"], connection);
                             bookings.Add(booking);
                         }
@@ -112,15 +106,12 @@ namespace VaskEnTidLib.Repo
         }
         private List<int> GetMachineIDs(int id, SqlConnection connection)
         {
-            //connection.Close();
             List<int> ids = new();
             Debug.WriteLine(id);
             var command = new SqlCommand("select m.* from Machines m, MachineIDs mm where mm.BookingID = @ID and m.MachineID = mm.MachineID", connection);
             command.Parameters.AddWithValue("@ID", id);
-            //connection.Open();
             try
             {
-
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -132,7 +123,7 @@ namespace VaskEnTidLib.Repo
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("You don f up");
+                Debug.WriteLine("Error in GetMachineIDs()");
                 Debug.WriteLine($"Error: {ex}");
             }
             finally
