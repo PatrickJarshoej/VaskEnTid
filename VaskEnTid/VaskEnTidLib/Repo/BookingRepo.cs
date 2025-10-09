@@ -16,7 +16,7 @@ namespace VaskEnTidLib.Repo
         private List<Booking> _bookings;
         public BookingRepo()
         {
-            _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;";
+            _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=true;";
             //_bookings = new List<Booking>();
         }
         //public List<Booking> bookings;
@@ -93,7 +93,7 @@ namespace VaskEnTidLib.Repo
                             double fisk2 = decimal.ToDouble(fisk);
                             Debug.WriteLine("hello 2");
                             booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeSpan)reader["Duration"], fisk2, (int)reader["BookingID"]);
-                            booking.MachineIDs = GetMachineIDs((int)reader["BookingID"], connection, reader);
+                            booking.MachineIDs = GetMachineIDs((int)reader["BookingID"], connection);
                             bookings.Add(booking);
                         }
                     }
@@ -109,9 +109,8 @@ namespace VaskEnTidLib.Repo
                 }
             }
             return bookings;
-            //throw new NotImplementedException();
         }
-        internal List<int> GetMachineIDs(int id, SqlConnection connection, SqlDataReader reader)
+        private List<int> GetMachineIDs(int id, SqlConnection connection)
         {
             //connection.Close();
             List<int> ids = new();
@@ -121,15 +120,15 @@ namespace VaskEnTidLib.Repo
             //connection.Open();
             try
             {
-                
-                //using (var reader = command.ExecuteReader())
-                //{
+
+                using (var reader = command.ExecuteReader())
+                {
                     while (reader.Read())
                     {
                         Debug.WriteLine((int)reader["MachineID"]);
                         ids.Add((int)reader["MachineID"]);
                     }
-                //}
+                }
             }
             catch (Exception ex)
             {
@@ -138,8 +137,6 @@ namespace VaskEnTidLib.Repo
             }
             finally
             {
-                //connection.Close();
-                //connection.Open();
             }
             return ids;
         }
