@@ -39,6 +39,7 @@ namespace VaskEnTidLib.Repo
         public Domicile GetByUserID(int userID)
         {
             throw new NotImplementedException();
+            
         }
         public void Update(Domicile theDomicile)
         {

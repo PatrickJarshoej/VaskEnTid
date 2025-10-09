@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace VaskEnTidLib.Model
 {
     
-    internal class Domicile
+    public class Domicile
     {
         public int DomicileID {  get; private set; }
         public List<int> UserIDs { get; private set; }

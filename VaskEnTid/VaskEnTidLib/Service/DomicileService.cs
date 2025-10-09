@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using VaskEnTidLib.Repo;
 using VaskEnTidLib.Model;
+using VaskEnTidLib.Repo;
 
 namespace VaskEnTidLib.Service
 {
@@ -20,36 +21,46 @@ namespace VaskEnTidLib.Service
 
         public void Create(string roadname, string postalcode, string floor, string door, string city, string region, string country) 
         {
-            throw new NotImplementedException();
+            Domicile theDomicile=new(roadname, postalcode, floor, door, city, region, country);
+            _domicileRepo.Add(theDomicile);
         }
         public void AddUserIDbyDomID(int userID, int domID) 
         {  
-            throw new NotImplementedException(); 
+            _domicileRepo.AddUserIDByDomID(userID, domID);
         }
         public List<Domicile> GetAll()
         {
-            throw new NotImplementedException();
+            return _domicileRepo.GetAll();
         }
         public void Update(Domicile theDomicile)
         {
-            throw new NotImplementedException();
+            if (_domicileRepo.GetByID(theDomicile.DomicileID) == null)
+            {
+                Debug.WriteLine("Booking does not exist");
+            }
+            else
+            {
+                _domicileRepo.Update(theDomicile);
+            }
         }
         public void DeleteByID(int domID) 
         {
-            throw new NotImplementedException(); 
+            _domicileRepo.DeleteByID(domID);
         }
         public Domicile GetByUserID(int userID) 
         { 
-            throw new NotImplementedException();
+            return _domicileRepo.GetByUserID(userID);
         }
 
         public Domicile GetByID(int domID)
         {
-            throw new NotImplementedException();
+            return _domicileRepo.GetByID(domID);
         }
         public double CalcPriceTallyByID(double newCost, int ID)
         {
-            throw new NotImplementedException();
+            _domicileRepo.CalculatePriceTallyByID(newCost, ID);
+            return GetByID(ID).PriceTally;
+            
         }
     }
 }
