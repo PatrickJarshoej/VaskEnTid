@@ -26,7 +26,31 @@ namespace VaskEnTidLib.Repo
         }
         public void Add(Domicile theDomicile)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("INSERT INTO Domiciles(RoadName, Floor, Door, PostalCode, City, Region, Country) VALUES (@DateAndTime, @DomicileID, @MachineIDs, @Duration, @TotalCost)", connection);
+                    command.Parameters.AddWithValue("@RoadName", theDomicile.Roadname);
+                    command.Parameters.AddWithValue("@Floor", theDomicile.Floor);
+                    command.Parameters.AddWithValue("@Door", theDomicile.Door);
+                    command.Parameters.AddWithValue("@PostalCode", theDomicile.Postalcode);
+                    command.Parameters.AddWithValue("@City", theDomicile.City);
+                    command.Parameters.AddWithValue("@Region", theDomicile.Region);
+                    command.Parameters.AddWithValue("@Country", theDomicile.Country);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in Add() in DomicileRepo");
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
 
         public List<Domicile> GetAll() 
@@ -34,29 +58,39 @@ namespace VaskEnTidLib.Repo
             var domiciles = new List<Domicile>();
             using (var connection = new SqlConnection(_connectionString))
             {
-                var command = new SqlCommand("SELECT * FROM Domiciles", connection);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    var command = new SqlCommand("SELECT * FROM Domiciles", connection);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        var domicile = new Domicile
-                        (
-                            (string)reader["Roadname"],
-                            (string)reader["Postalcode"],
-                            (string)reader["Floor"],
-                            (string)reader["Door"],
-                            (string)reader["City"],
-                            (string)reader["Region"],
-                            (string)reader["Country"],
-                            GetUserIDs((int)reader["DomicileID"], connection),
-                            (int)reader["DomicileID"],
-                            GetTally((int)reader["DomicileID"], connection)
-                        );
-                        domiciles.Add(domicile);
+                        while (reader.Read())
+                        {
+                            var domicile = new Domicile
+                            (
+                                (string)reader["Roadname"],
+                                (string)reader["Postalcode"],
+                                (string)reader["Floor"],
+                                (string)reader["Door"],
+                                (string)reader["City"],
+                                (string)reader["Region"],
+                                (string)reader["Country"],
+                                GetUserIDs((int)reader["DomicileID"], connection),
+                                (int)reader["DomicileID"],
+                                GetTally((int)reader["DomicileID"], connection)
+                            );
+                            domiciles.Add(domicile);
+                        }
                     }
                 }
-                connection.Close();
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in GetAll() in DomicileRepo");
+                    Debug.WriteLine($"Error: {ex}");
+                }
+                finally { connection.Close(); }
+
+
             }
             return domiciles;
         }
@@ -66,30 +100,40 @@ namespace VaskEnTidLib.Repo
             Domicile domicile = null;
             using (var connection = new SqlConnection(_connectionString))
             {
-                var command = new SqlCommand("SELECT * FROM Domiciles, WHERE DomicileID=@Id", connection);
-                command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                using (var reader = command.ExecuteReader())
+                try
                 {
-                    if (reader.Read())
+                    var command = new SqlCommand("SELECT * FROM Domiciles, WHERE DomicileID=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", id);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        domicile = new Domicile
-                        (
+                        if (reader.Read())
+                        {
+                            domicile = new Domicile
+                            (
 
-                            (string)reader["Roadname"],
-                            (string)reader["Postalcode"],
-                            (string)reader["Floor"],
-                            (string)reader["Door"],
-                            (string)reader["City"],
-                            (string)reader["Region"],
-                            (string)reader["Country"],
-                            GetUserIDs((int)reader["DomicileID"], connection),
-                            (int)reader["DomicileID"],
-                            GetTally((int)reader["DomicileID"],connection)
-                        );
+                                (string)reader["Roadname"],
+                                (string)reader["Postalcode"],
+                                (string)reader["Floor"],
+                                (string)reader["Door"],
+                                (string)reader["City"],
+                                (string)reader["Region"],
+                                (string)reader["Country"],
+                                GetUserIDs((int)reader["DomicileID"], connection),
+                                (int)reader["DomicileID"],
+                                GetTally((int)reader["DomicileID"], connection)
+                            );
+                        }
                     }
+                    
                 }
-                connection.Close();
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in GetByID() in DomicileRepo");
+                    Debug.WriteLine($"Error: {ex}");
+                }
+                finally { connection.Close(); }
+
             }
             return domicile;
         }
@@ -112,7 +156,7 @@ namespace VaskEnTidLib.Repo
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error in GetUserIDs()");
+                Debug.WriteLine("Error in GetUserIDs() in DomicileRepo");
                 Debug.WriteLine($"Error: {ex}");
             }
             finally

@@ -24,8 +24,6 @@ namespace VaskEnTidLib.Repo
         void DeleteByID(int id);
 
         double CalculatePriceTallyByID(double newCost, int id);
-        List<int> GetUserIDs(int id, SqlConnection connection);
-        double GetTally(int id, SqlConnection connection);
 
     }
 }
