@@ -10,7 +10,7 @@ namespace VaskEnTidLib.Repo
     public interface IMachineRepo
     {
         public List<Machine> GetAll();
-        public Machine GetByID();
+        public Machine GetByID(int id);
         public void Add();
         public void DeleteByID();
         public void Update();

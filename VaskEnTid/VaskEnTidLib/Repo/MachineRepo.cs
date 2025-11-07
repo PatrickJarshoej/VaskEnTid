@@ -24,7 +24,7 @@ namespace VaskEnTidLib.Repo
             throw new NotImplementedException();
         }
 
-        public Machine GetByID()
+        public Machine GetByID(int id)
         {
             throw new NotImplementedException();
         }

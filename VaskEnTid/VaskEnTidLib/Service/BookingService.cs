@@ -64,8 +64,8 @@ namespace VaskEnTidLib.Service
             double cost = 0;
             foreach (var m in booking.MachineIDs)
             {
-                //Machine machine = _machineRepo.GetByID(m); 
-                //cost += machine.Cost;
+                Model.Machine machine = _machineRepo.GetByID(m);
+                cost += machine.Cost;
             }
             return cost;
         }
