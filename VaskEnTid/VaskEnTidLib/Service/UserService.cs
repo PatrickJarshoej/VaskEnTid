@@ -10,21 +10,23 @@ namespace VaskEnTidLib.Service
 {
     public class UserService
     {
+        private IUserRepo _userRepo;
         public List<User> GetByDomicileID(int id)
         {
-            throw new NotImplementedException();
+            return _userRepo.GetByDomicileID(id);
         }
         public User GetByID(int id)
         {
-            throw new NotImplementedException();
+            return _userRepo.GetByID(id);
         }
         public void Update(User user)
         {
 
         }
-        public void CreateUser(string name, string lastName, int domicileID, string email, string phone)
+        public void CreateUser(string name, string lastName, List<int> domicileID, string email, string phone)
         {
             User user = new(name, lastName, domicileID, email, phone);
+            _userRepo.Add(user);
         }
     }
 }
