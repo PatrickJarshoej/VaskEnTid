@@ -1,3 +1,6 @@
+using VaskEnTidLib.Service;
+using VaskEnTidLib.Repo;
+
 namespace VaskEnTidWeb
 {
     public class Program
@@ -5,6 +8,14 @@ namespace VaskEnTidWeb
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            //Singleton for Booking repository
+            builder.Services.AddSingleton<IMachineRepo, MachineRepo>();
+            builder.Services.AddSingleton<MachineService>();
+
+            //Singleton for Booking repository
+            builder.Services.AddSingleton<IBookingRepo, BookingRepo>();
+            builder.Services.AddSingleton<BookingService>();
 
             // Add services to the container.
             builder.Services.AddRazorPages();
