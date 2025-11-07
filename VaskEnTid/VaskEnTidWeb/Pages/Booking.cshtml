@@ -5,4 +5,13 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to exist.</p>
+			@foreach (VaskEnTidLib.Model.Booking booking in Model.Bookings)
+			{
+				<h1>
+					@booking.BookingID
+				</h1>
+
+				<p>
+					@booking.
+				</p>
+			}

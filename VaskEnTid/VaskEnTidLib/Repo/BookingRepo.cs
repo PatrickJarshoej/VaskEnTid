@@ -16,7 +16,7 @@ namespace VaskEnTidLib.Repo
         private List<Booking> _bookings;
         public BookingRepo()
         {
-            _connectionString = "Data Source=mssql15.unoeuro.com; ID=arvedlund_com; password=BdpAFfg62xzDnR3wkcht; Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=true;";
+            _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com;Password=BdpAFfg62xzDnR3wkcht;Encrypt=False; Database=arvedlund_com_db_vask_en_tid; Command Timeout=30";
         }
         //public List<Booking> bookings;
         public void Add(Booking booking)
