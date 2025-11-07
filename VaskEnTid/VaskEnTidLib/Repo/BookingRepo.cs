@@ -16,7 +16,7 @@ namespace VaskEnTidLib.Repo
         private List<Booking> _bookings;
         public BookingRepo()
         {
-            _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com;Password=BdpAFfg62xzDnR3wkcht;Encrypt=False; Database=arvedlund_com_db_vask_en_tid; Command Timeout=30";
+            _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com;Password=BdpAFfg62xzDnR3wkcht;Encrypt=False; Database=arvedlund_com_db_vask_en_tid; Command Timeout=30;MultipleActiveResultSets=true;";
         }
         //public List<Booking> bookings;
         public void Add(Booking booking)
@@ -30,7 +30,7 @@ namespace VaskEnTidLib.Repo
                     command.Parameters.AddWithValue("@DomicileID", booking.DomicileID);
                     command.Parameters.AddWithValue("@MachineIDs", booking.MachineIDs);
                     command.Parameters.AddWithValue("@Duration", booking.Duration);
-                    command.Parameters.AddWithValue("@TotalCost", booking.TotalCost);
+                    command.Parameters.AddWithValue("@TotalCost", booking.TotalCost);   
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -104,11 +104,13 @@ namespace VaskEnTidLib.Repo
             }
             return bookings;
         }
+
         private List<int> GetMachineIDs(int id, SqlConnection connection)
         {
             List<int> ids = new();
             Debug.WriteLine(id);
-            var command = new SqlCommand("select m.* from Machines m, MachineIDs mm where mm.BookingID = @ID and m.MachineID = mm.MachineID", connection);
+            //var command = new SqlCommand("select m.* from Machines m, MapMachineID mm where mm.BookingID = @ID and m.MachineID = mm.MachineID", connection);
+            var command = new SqlCommand("select * from MapMachineID where BookingID = @ID ", connection);
             command.Parameters.AddWithValue("@ID", id);
             try
             {
@@ -116,7 +118,7 @@ namespace VaskEnTidLib.Repo
                 {
                     while (reader.Read())
                     {
-                        Debug.WriteLine((int)reader["MachineID"]);
+                        //Debug.WriteLine((int)reader["MachineID"]);
                         ids.Add((int)reader["MachineID"]);
                     }
                 }
@@ -134,38 +136,65 @@ namespace VaskEnTidLib.Repo
 
         public Booking GetByDomicileID(int id)
         {
-            throw new NotImplementedException();
+            Booking booking = null;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("SELECT * FROM MapDomicileID WHERE BookingID = @ID", connection);
+                    command.Parameters.AddWithValue("@ID", id);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+            return booking;
         }
 
         public Booking GetByID(int id)
         {
-            //Booking booking;
-            //using (var connection = new SqlConnection(_connectionString))
-            //{
-            //    try
-            //    {
-            //        var command = new SqlCommand("SELECT * FROM Bookings", connection);
-            //        connection.Open();
-            //        using (var reader = command.ExecuteReader())
-            //        {
-            //            if (reader.Read())
-            //            {
-            //                var booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (int)reader["MachineIDs"], (TimeOnly)reader["Duration"], (double)reader["TotalCost"], (int)reader["ID"]);
-            //                booking = booking
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Debug.WriteLine($"Error: {ex.Message}");
-            //    }
-            //    finally
-            //    {
-            //        connection.Close();
-            //    }
-            //    return booking;
-            //}
-            throw new NotImplementedException();
+            Booking ?booking = null;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("SELECT * FROM Bookings WHERE BookingID = @ID", connection);
+                    command.Parameters.AddWithValue("@ID", id);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeSpan)reader["Duration"], decimal.ToDouble((decimal)reader["TotalCost"]), (int)reader["BookingID"]);
+                            booking.MachineIDs = GetMachineIDs((int)reader["BookingID"], connection);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return booking;
+            //throw new NotImplementedException();
         }
 
         public void Update(Booking booking)

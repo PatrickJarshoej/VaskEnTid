@@ -56,7 +56,12 @@ namespace VaskEnTidLib.Service
         }
         public Booking GetByID(int id)
         {
-            return _bookingRepo.GetByID(id);
+            Booking b = _bookingRepo.GetByID(id);
+            if (b == null)
+            {
+                b = new Booking(DateTime.MinValue, 0, TimeSpan.Zero, 0,0);
+            }
+            return b;
         }
 
         public double CalcCost(Booking booking)
