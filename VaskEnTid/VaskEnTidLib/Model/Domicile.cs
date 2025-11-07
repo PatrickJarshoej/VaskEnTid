@@ -20,11 +20,11 @@ namespace VaskEnTidLib.Model
         public string Region{ get; private set; }
         public string Country { get; private set; }
         public double PriceTally { get; private set; }
-
-        public Domicile(string roadname, string postalcode, string floor, string door, string city, string region, string country)
+        List<int> _defaultList = new List<int>(0);
+        public Domicile(string roadname, string postalcode, string floor, string door, string city, string region, string country, List<int> userIDs, int domicileID=0, double priceTally = 0)
         {
-            DomicileID = 0;
-            UserIDs = new List<int> ();
+            DomicileID = domicileID;
+            UserIDs = userIDs;
             Roadname = roadname;
             Postalcode = postalcode;
             Floor = floor;
@@ -32,7 +32,20 @@ namespace VaskEnTidLib.Model
             City = city;
             Region = region;
             Country = country;
-            PriceTally = 0;
+            PriceTally = priceTally;
+        }
+        public Domicile(string roadname, string postalcode, string floor, string door, string city, string region, string country, int domicileID = 0, double priceTally = 0)
+        {
+            DomicileID = domicileID;
+            UserIDs = new List<int>();
+            Roadname = roadname;
+            Postalcode = postalcode;
+            Floor = floor;
+            Door = door;
+            City = city;
+            Region = region;
+            Country = country;
+            PriceTally = priceTally;
         }
     }
 }

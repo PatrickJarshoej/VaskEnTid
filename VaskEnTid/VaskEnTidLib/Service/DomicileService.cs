@@ -59,8 +59,8 @@ namespace VaskEnTidLib.Service
         public double CalcPriceTallyByID(double newCost, int ID)
         {
             _domicileRepo.CalculatePriceTallyByID(newCost, ID);
-            return GetByID(ID).PriceTally;
             
+            return GetByID(ID).PriceTally;
         }
     }
 }
