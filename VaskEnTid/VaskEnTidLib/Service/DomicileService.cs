@@ -36,7 +36,7 @@ namespace VaskEnTidLib.Service
         {
             if (_domicileRepo.GetByID(theDomicile.DomicileID) == null)
             {
-                Debug.WriteLine("Booking does not exist");
+                Debug.WriteLine("Domicile does not exist");
             }
             else
             {
