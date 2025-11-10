@@ -10,7 +10,7 @@ using VaskEnTidLib.Repo;
 
 namespace VaskEnTidLib.Service
 {
-    internal class DomicileService
+    public class DomicileService
     {
         private IDomicileRepo _domicileRepo;
 

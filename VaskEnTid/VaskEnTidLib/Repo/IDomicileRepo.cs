@@ -8,7 +8,7 @@ using VaskEnTidLib.Model;
 
 namespace VaskEnTidLib.Repo
 {
-    internal interface IDomicileRepo
+    public interface IDomicileRepo
     {
         void AddUserIDByDomID(int userID, int domicileID);
         void Add(Domicile theDomicile);

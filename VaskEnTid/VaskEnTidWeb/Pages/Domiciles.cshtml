@@ -1,0 +1,45 @@
+﻿@page
+@model VaskEnTidWeb.Pages.DomicileModel
+@{
+    ViewData["Title"] = "Domecile n shit";
+}
+<h1>@ViewData["Title"]</h1>
+
+@foreach (VaskEnTidLib.Model.Domicile domicile in Model.Domiciles)
+{
+    <h1>
+        Booking Id: @domicile.DomicileID
+    </h1>
+
+    <p>
+        Domicile Id: @domicile.Roadname
+    </p>
+    <p>
+        Domicile Id: @domicile.Region
+    </p>
+    <p>
+        Domicile Id: @domicile.City
+    </p>
+    <p>
+        Domicile Id: @domicile.Country
+    </p>
+    <p>
+        Domicile Id: @domicile.Door
+    </p>
+    <p>
+        Domicile Id: @domicile.Floor
+    </p>
+    <p>
+        Domicile Id: @domicile.Postalcode
+    </p>
+    <p>
+        User Ids
+        @foreach (var i in domicile.UserIDs)
+        {
+           @i             
+        }
+    </p>
+    <p>
+        PriceTally: @domicile.PriceTally
+    </p>
+}

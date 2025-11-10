@@ -18,7 +18,7 @@ namespace VaskEnTidLib.Repo
         public DomicileRepo(List<Domicile> domiciles)
         {
             _domiciles = domiciles;
-            _connectionString= string.Empty;
+            _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com;Password=BdpAFfg62xzDnR3wkcht;Encrypt=False; Database=arvedlund_com_db_vask_en_tid; Command Timeout=30;MultipleActiveResultSets=true;";
         }
         public void AddUserIDByDomID(int userID, int domicileID)
         {
