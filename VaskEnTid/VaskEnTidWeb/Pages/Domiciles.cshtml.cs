@@ -9,7 +9,6 @@ namespace VaskEnTidWeb.Pages
     {
 
         DomicileService _domicileService;
-        //MachineService _machineService;
         public List<Domicile> Domiciles {  get; set; }
 
         public DomicileModel(DomicileService ds)
