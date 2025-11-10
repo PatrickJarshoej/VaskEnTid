@@ -10,7 +10,7 @@ using VaskEnTidLib.Model;
 namespace VaskEnTidLib.Repo
 {
 
-    internal class DomicileRepo: IDomicileRepo
+    public class DomicileRepo: IDomicileRepo
     {
         
         private List<Domicile> _domiciles;

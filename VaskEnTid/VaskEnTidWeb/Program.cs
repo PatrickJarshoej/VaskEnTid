@@ -16,7 +16,9 @@ namespace VaskEnTidWeb
             //Singleton for Booking repository
             builder.Services.AddSingleton<IBookingRepo, BookingRepo>();
             builder.Services.AddSingleton<BookingService>();
-
+            //Singleton for Domicile repository
+            builder.Services.AddSingleton<IDomicileRepo, DomicileRepo>();
+            builder.Services.AddSingleton<DomicileService>();
             // Add services to the container.
             builder.Services.AddRazorPages();
 
