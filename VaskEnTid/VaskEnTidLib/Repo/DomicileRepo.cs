@@ -22,7 +22,48 @@ namespace VaskEnTidLib.Repo
         }
         public void AddUserIDByDomID(int userID, int domicileID)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("INSERT INTO MapDomicileID(DomicileID, UserID) VALUES (@DomicileID @UserID)", connection);
+                    command.Parameters.AddWithValue("@DomicileID", domicileID);
+                    command.Parameters.AddWithValue("@UserID", userID);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in Add() in DomicileRepo");
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+        public void RemoveUserByID(int userID)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("DELETE FROM MapDomicileID WHERE DomicileID = @ID", connection);
+                    command.Parameters.AddWithValue("@ID", userID);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
         }
         public void Add(Domicile theDomicile)
         {
@@ -30,7 +71,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("INSERT INTO Domiciles(RoadName, Floor, Door, PostalCode, City, Region, Country) VALUES (@DateAndTime, @DomicileID, @MachineIDs, @Duration, @TotalCost)", connection);
+                    var command = new SqlCommand("INSERT INTO Domiciles(RoadName, Floor, Door, PostalCode, City, Region, Country) VALUES (@RoadName, @Floor, @Door, @PostalCode, @City, @Region, @Country)", connection);
                     command.Parameters.AddWithValue("@RoadName", theDomicile.Roadname);
                     command.Parameters.AddWithValue("@Floor", theDomicile.Floor);
                     command.Parameters.AddWithValue("@Door", theDomicile.Door);
@@ -159,9 +200,7 @@ namespace VaskEnTidLib.Repo
                 Debug.WriteLine("Error in GetUserIDs() in DomicileRepo");
                 Debug.WriteLine($"Error: {ex}");
             }
-            finally
-            {
-            }
+            finally { connection.Close(); }
             return ids;
         }
         private double GetTally(int id, SqlConnection connection)
@@ -180,20 +219,113 @@ namespace VaskEnTidLib.Repo
         }
         public Domicile GetByUserID(int userID)
         {
-            throw new NotImplementedException();
-            
+            Domicile domicile = null;
+            int domicileID=0;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("SELECT * FROM MapDomicileID, WHERE UserID=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", userID);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            domicileID = (int)reader["DomicileID"];
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in GetByUserID() in DomicileRepo");
+                    Debug.WriteLine($"Error: {ex}");
+                }
+                finally { connection.Close(); }
+                domicile=GetByID(domicileID);
+
+            }
+            return domicile;
+
         }
         public void Update(Domicile theDomicile)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("UPDATE Domiciles SET RoadName=@roadName, Floor=@floor, Door=@door, PostalCode=@postalcode, City=@city, Region=@region, Country=@country Where DomicileID=@DomicileID ", connection);
+                    command.Parameters.AddWithValue("@roadName", theDomicile.Roadname);
+                    command.Parameters.AddWithValue("@floor", theDomicile.Floor);
+                    command.Parameters.AddWithValue("@door", theDomicile.Door);
+                    command.Parameters.AddWithValue("@postalCode", theDomicile.Postalcode);
+                    command.Parameters.AddWithValue("@city", theDomicile.City);
+                    command.Parameters.AddWithValue("@region", theDomicile.Region);
+                    command.Parameters.AddWithValue("@country", theDomicile.Country);
+                    command.Parameters.AddWithValue("@DomicileID", theDomicile.DomicileID);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in Add() in DomicileRepo");
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
         public void DeleteByID(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("DELETE FROM Domiciles WHERE DomicileID = @ID", connection);
+                    command.Parameters.AddWithValue("@ID", id);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
         public double CalculatePriceTallyByID(double newCost, int id) 
-        { 
-            throw new NotImplementedException(); 
+        {
+            double tally = newCost;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("Update DomicileTally SET PriceTally=@priceTally WHERE ID = @ID", connection);
+                    command.Parameters.AddWithValue("@ID", id);
+
+                    connection.Open();
+                    {
+                        tally+=GetTally(id, connection);
+                        command.Parameters.AddWithValue("@priceTally", tally);
+                        command.ExecuteNonQuery();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in CalcualatePriceTallyByID() in DomicileRepo");
+                    Debug.WriteLine($"Error: {ex}");
+                }
+                finally { connection.Close(); }
+
+            }
+            return tally;
         }
 
     }
