@@ -18,5 +18,6 @@ namespace VaskEnTidLib.Repo
         public void Update(User user);
         public void Add(User user);
         public void DeleteByID(int id);
+        public User CheckPassword(int userID, string password);
     }
 }

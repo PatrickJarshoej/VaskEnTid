@@ -9,7 +9,7 @@ namespace VaskEnTidWeb
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //Singleton for Booking repository
+            //Singleton for Machine repository
             builder.Services.AddSingleton<IMachineRepo, MachineRepo>();
             builder.Services.AddSingleton<MachineService>();
 
@@ -19,6 +19,11 @@ namespace VaskEnTidWeb
             //Singleton for Domicile repository
             builder.Services.AddSingleton<IDomicileRepo, DomicileRepo>();
             builder.Services.AddSingleton<DomicileService>();
+
+            //Singleton for User repository
+            builder.Services.AddSingleton<IUserRepo, UserRepo>();
+            builder.Services.AddSingleton<UserService>();
+
             // Add services to the container.
             builder.Services.AddRazorPages();
 

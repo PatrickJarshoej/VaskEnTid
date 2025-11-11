@@ -7,15 +7,20 @@
 <div class="text-center">
     <h1 class="display-4">Vasketid</h1>
     <h2 class="display-4">Please log-in</h2>
-    <form action="/action_page.php">
+    <form method="post" asp-page-handler="LogIn">
         <div class="mb-3 mt-3">
             <label for="email" class="form-label">Username:</label>
-            <input type="email" class="form-control" id="Username" placeholder="Enter username" name="username">
+            <input type="number" asp-for="Userid" class="form-control" id="Username" placeholder="Enter username" name="username">
         </div>
         <div class="mb-3">
             <label for="pwd" class="form-label">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+            <input type="password" class="form-control" asp-for ="Pass" id="pwd" placeholder="Enter password" name="pswd">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="submit"/>
     </form>
 </div>
+<form method="post" asp-page-handler="LogIn">
+    <input type="number" asp-for="Userid" class="form-label" />
+    <input type="password" asp-for="Pass" class="form-label" />
+    <input type="submit"/>
+</form>

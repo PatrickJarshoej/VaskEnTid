@@ -9,17 +9,28 @@ namespace VaskEnTidLib.Model
 {
     public class User
     {
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public int UserID { get; private set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int UserID { get; set; }
         public List<int> DomicileID { get; set; }
-        public string Email { get; private set; }
-        public string Phone { get; private set; }
-        public string Password { get; private set; }
-        public bool IsAdmin { get; private set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Password { get; set; }
+        public bool IsAdmin { get; set; }
         public User()
         {
-
+            FirstName = "not a user";
+            LastName = "you fucked up";
+            UserID = 0;
+            List<int> jon = new(0);
+            Email = "You should probably fix this";
+            Phone = "Unless it is what you wanted?";
+            Password = "Which in that case, good job i guess?";
+            IsAdmin = false;
+        }
+        public User(int userID)
+        {
+            UserID = userID;
         }
         public User(int userID, string firstname, string lastName, string email, string phone, string password, bool isAdmin)
         {
