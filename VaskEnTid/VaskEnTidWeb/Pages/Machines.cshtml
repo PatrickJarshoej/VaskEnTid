@@ -1,0 +1,34 @@
+﻿@page
+@model VaskEnTidWeb.Pages.MachineModel
+@{
+    ViewData["Title"] = "Machines n shit";
+}
+<link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
+<h1>@ViewData["Title"]</h1>
+
+
+@foreach (VaskEnTidLib.Model.Machine machine in Model.Machines)
+{
+    <div class="card">
+        <p>
+            Machine ID: @machine.MachineID
+        </p>
+        <p>
+            Machine Type: @machine.Type
+        </p>
+        <p>
+           Machine Cost: @machine.Cost
+        </p>
+        <p>
+           Machine Status: @machine.Status
+        </p>
+        <div>
+            <!--This button runs the OnPostShow method and defines a temporary booking id we can send over -->
+            <form method="post" asp-page-handler="Show">
+                <!--to the next page -->
+                <input type="hidden" name="MachineID" asp-for="TempMachineID" value="@machine.MachineID" />
+                <input type="submit" value="Open Machine" />
+            </form>
+        </div>
+    </div>
+}
