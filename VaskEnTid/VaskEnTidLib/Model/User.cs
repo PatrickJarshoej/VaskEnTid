@@ -15,17 +15,21 @@ namespace VaskEnTidLib.Model
         public List<int> DomicileID { get; set; }
         public string Email { get; private set; }
         public string Phone { get; private set; }
+        public string Password { get; private set; }
+        public bool IsAdmin { get; private set; }
         public User()
         {
 
         }
-        public User(int userID, string firstname, string lastName, string email, string phone)
+        public User(int userID, string firstname, string lastName, string email, string phone, string password, bool isAdmin)
         {
             FirstName = firstname;
             LastName = lastName;
             UserID = userID;
             Email = email;
             Phone = phone;
+            Password = password;
+            IsAdmin = isAdmin;
         }
         public User(string firstname, string lastName, List<int> domicileID, string email, string phone)
         {
