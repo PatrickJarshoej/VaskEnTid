@@ -29,10 +29,10 @@
         <p>
             TotalCost: @Model.SpecificBooking.TotalCost
         </p>
-        <form method="post" asp-page-handler="Delete">
+        @* <form method="post" asp-page-handler="Delete">
             <input type="Hidden" name="TempTitle" asp-for="TempTitle" value="@Model.SpecificBlog.Title" />
             <input type="submit" value="Delete Blog" />
-        </form>
+        </form> *@
         <div>
             <form method="post" asp-page-handler="Edit">
                 <input type="hidden" name="Edit" asp-for="Edit" value="true" />
