@@ -11,8 +11,8 @@ namespace VaskEnTidLib.Repo
     {
         public List<Machine> GetAll();
         public Machine GetByID(int id);
-        public void Add();
-        public void DeleteByID();
-        public void Update();
+        public void Add(Machine theMachine);
+        public void DeleteByID(int id);
+        public void Update(Machine theMachine);
     }
 }

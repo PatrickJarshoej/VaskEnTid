@@ -142,7 +142,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("SELECT * FROM Domiciles, WHERE DomicileID=@Id", connection);
+                    var command = new SqlCommand("SELECT * FROM Domiciles WHERE DomicileID=@Id", connection);
                     command.Parameters.AddWithValue("@Id", id);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
@@ -223,7 +223,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("SELECT * FROM MapDomicileID, WHERE UserID=@Id", connection);
+                    var command = new SqlCommand("SELECT * FROM MapDomicileID WHERE UserID=@Id", connection);
                     command.Parameters.AddWithValue("@Id", userID);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
