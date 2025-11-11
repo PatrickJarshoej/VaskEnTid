@@ -3,26 +3,37 @@
 @{
     ViewData["Title"] = "Domecile n shit";
 }
+<link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
 <h1>@ViewData["Title"]</h1>
 
 @foreach (VaskEnTidLib.Model.Domicile domicile in Model.Domiciles)
-{
-    <h1>
-        Domicile Id: @domicile.DomicileID
-    </h1>
+{<div class="card">
+        <h1>
+            Domicile Id: @domicile.DomicileID
+        </h1>
 
-    <p>
-        Adress: @domicile.Roadname @domicile.Door, @domicile.Floor. etage, @domicile.Postalcode @domicile.City, @domicile.Region, @domicile.Country
-    </p>
+        <p>
+            Adress: @domicile.Roadname @domicile.Door, @domicile.Floor. etage, @domicile.Postalcode @domicile.City, @domicile.Region, @domicile.Country
+        </p>
 
-    <p>
-        User Ids:
-        @foreach (var i in domicile.UserIDs)
-        {
-            <text>@i  </text>
-        }
-    </p>
-    <p>
-        PriceTally: @domicile.PriceTally
-    </p>
+        <p>
+            User Ids:
+            @foreach (var i in domicile.UserIDs)
+            {
+                <text>@i  </text>
+            }
+        </p>
+        <p>
+            PriceTally: @domicile.PriceTally
+        </p>
+        <div>
+            <!--This button runs the OnPostShow method and defines a temporary booking id we can send over -->
+            <form method="post" asp-page-handler="Show">
+                <!--to the next page -->
+                <input type="hidden" name="DomicileID" asp-for="TempDomicileID" value="@domicile.DomicileID" />
+                <input type="submit" value="Open Domicile" />
+            </form>
+        </div>
+ </div>
+    
 }

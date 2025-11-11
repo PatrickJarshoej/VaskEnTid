@@ -10,13 +10,12 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VaskEnTidLib.Repo
 {
-    internal class UserRepo : IUserRepo
+    public class UserRepo : IUserRepo
     {
-        private List<User> _users;
         private string _connectionString;
         public UserRepo()
         {
-            _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com; password=BdpAFfg62xzDnR3wkcht; Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=true;";
+            _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com;Password=BdpAFfg62xzDnR3wkcht;Encrypt=False; Database=arvedlund_com_db_vask_en_tid; Command Timeout=30;MultipleActiveResultSets=true;";
         }
         /// <summary>
         /// Add's a User to the Users database
@@ -132,7 +131,7 @@ namespace VaskEnTidLib.Repo
                 }
                 return domicileIDs;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Error: {ex}");
             }
@@ -207,45 +206,101 @@ namespace VaskEnTidLib.Repo
         /// <returns></returns>
         public User GetByID(int id)
         {
-            User user = new();
+            Console.WriteLine("hep1");
+            User IDuser = new();
             using (var connection = new SqlConnection(_connectionString))
             {
                 try
                 {
-                    var command = new SqlCommand("select FROM Users WHERE UserID = @ID", connection);
+                    var command = new SqlCommand("SELECT * FROM Users WHERE UserID = @ID", connection);
                     command.Parameters.AddWithValue("@ID", id);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
                     {
-                        user = new User(
+                        Console.WriteLine("hep2");
+                        //IDuser = new User(
 
-                            (int)reader["UserID"],
-                            (string)reader["FirstName"],
-                            (string)reader["LastName"],
-                            (string)reader["Email"],
-                            (string)reader["Phone"],
-                            (string)reader["Password"],
-                            (bool)reader["IsAdmin"]
+                        //    (int)reader["UserID"],
+                        //    (string)reader["FirstName"],
+                        //    (string)reader["LastName"],
+                        //    (string)reader["Email"],
+                        //    (string)reader["Phone"],
+                        //    (string)reader["Password"],
+                        //    (bool)reader["IsAdmin"]
+                        //    );
+                        Console.WriteLine("ID");
+                        IDuser.UserID = ((int)reader["UserID"]);
+                        Console.WriteLine("FN");
+                        IDuser.FirstName = ((string)reader["FirstName"]);
+                        Console.WriteLine("LN");
+                        IDuser.LastName = ((string)reader["LastName"]);
+                        Console.WriteLine("EM");
+                        IDuser.Email = ((string)reader["Email"]);
+                        Console.WriteLine("Phone");
+                        IDuser.Phone = ((string)reader["Phone"]);
+                        Console.WriteLine("Pass");
+                        IDuser.Password = ((string)reader["Password"]);
+                        Console.WriteLine("IsAdmin");
+                        IDuser.IsAdmin = ((bool)reader["IsAdmin"]);
 
-                            );
-                        user.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
+                        Console.WriteLine("hep3");
+                        IDuser.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
                     }
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error: {ex.Message}");
+                    Console.WriteLine("hep4");
                 }
                 finally
                 {
                     connection.Close();
                 }
             }
-            return user;
+            return IDuser;
         }
 
         public void Update(User user)
         {
             throw new NotImplementedException();
+        }
+        public User CheckPassword(int userID, string password)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+
+                    var command = new SqlCommand("SELECT UserID FROM Users WHERE UserID = @ID and Password = @Password", connection);
+                    command.Parameters.AddWithValue("@ID", userID);
+                    command.Parameters.AddWithValue("@Password", password);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        User user = new();
+                        if (reader.Read())
+                        {
+                            user.UserID = (int)reader["UserID"];
+                            user = GetByID(userID);
+                            return user;
+                        }
+                        return user;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error: {ex.Message}");
+                    Console.WriteLine("Catch caught a bug in Repo");
+                    User user = new();
+                    return user;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+
         }
     }
 

@@ -48,7 +48,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("DELETE FROM MapDomicileID WHERE DomicileID = @ID", connection);
+                    var command = new SqlCommand("DELETE FROM MapDomicileID WHERE UserID = @ID", connection);
                     command.Parameters.AddWithValue("@ID", userID);
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -142,7 +142,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("SELECT * FROM Domiciles, WHERE DomicileID=@Id", connection);
+                    var command = new SqlCommand("SELECT * FROM Domiciles WHERE DomicileID=@Id", connection);
                     command.Parameters.AddWithValue("@Id", id);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
@@ -223,7 +223,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("SELECT * FROM MapDomicileID, WHERE UserID=@Id", connection);
+                    var command = new SqlCommand("SELECT * FROM MapDomicileID WHERE UserID=@Id", connection);
                     command.Parameters.AddWithValue("@Id", userID);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
@@ -253,7 +253,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("UPDATE Domiciles SET RoadName=@roadName, Floor=@floor, Door=@door, PostalCode=@postalcode, City=@city, Region=@region, Country=@country Where DomicileID=@DomicileID ", connection);
+                    var command = new SqlCommand("UPDATE Domiciles SET RoadName=@roadName, Floor=@floor, Door=@door, PostalCode=@postalcode, City=@city, Region=@region, Country=@country WHERE DomicileID=@DomicileID ", connection);
                     command.Parameters.AddWithValue("@roadName", theDomicile.Roadname);
                     command.Parameters.AddWithValue("@floor", theDomicile.Floor);
                     command.Parameters.AddWithValue("@door", theDomicile.Door);
@@ -289,6 +289,7 @@ namespace VaskEnTidLib.Repo
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine($"Error: in DeleteBy in DomicileRepo");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally
