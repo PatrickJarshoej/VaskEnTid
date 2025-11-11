@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection.PortableExecutable;
 using VaskEnTidLib.Model;
 using VaskEnTidLib.Service;
 
@@ -9,16 +10,19 @@ namespace VaskEnTidWeb.Pages
     {
 
         BookingService _bookingService;
-        //MachineService _machineService;
+        MachineService _machineService;
         public List<Booking> Bookings {  get; set; }
+        public List<VaskEnTidLib.Model.Machine> Machines {  get; set; }
 
         [BindProperty]
         public int TempBookingID { get; set; }
 
-        public BookingModel(BookingService bs)
+        public BookingModel(BookingService bs, MachineService ms)
         {
             _bookingService = bs;
+            _machineService = ms;
             Bookings = _bookingService.GetAll();
+            Machines = _machineService.GetAll();
         }
 
         public void OnGet()

@@ -43,3 +43,16 @@
         </div>
     </div>
 }
+
+@foreach (VaskEnTidLib.Model.Machine machine in Model.Machines)
+{
+    <p>
+        @machine.MachineID
+    </p>
+    <p>
+        @machine.Type
+    </p>
+    <p>
+        @machine.Status
+    </p>
+}
