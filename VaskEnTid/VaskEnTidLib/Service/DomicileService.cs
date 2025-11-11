@@ -19,7 +19,7 @@ namespace VaskEnTidLib.Service
             _domicileRepo = domicileRepo;
         }
 
-        public void Create(string roadname, string postalcode, string floor, string door, string city, string region, string country) 
+        public void Create(string roadname, int postalcode, string floor, string door, string city, string region, string country) 
         {
             Domicile theDomicile=new(roadname, postalcode, floor, door, city, region, country);
             _domicileRepo.Add(theDomicile);
