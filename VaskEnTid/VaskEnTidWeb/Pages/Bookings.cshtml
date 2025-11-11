@@ -1,5 +1,5 @@
 ﻿@page
-@model VaskEnTidWeb.Pages.BookingModel
+@model VaskEnTidWeb.Pages.BookingsModel
 @{
     ViewData["Title"] = "Booking n shit";
 }
@@ -37,7 +37,7 @@
             <!--This button runs the OnPostShow method and defines a temporary booking id we can send over -->
             <form method="post" asp-page-handler="Show">
                 <!--to the next page -->
-                <input type="hidden" name="BookingID" asp-for="TempBookingID" value="@booking.BookingID" />
+                <input type="hidden" name="TempBookingID" asp-for="TempBookingID" value="@booking.BookingID" />
                 <input type="submit" value="Open Booking" />
             </form>
         </div>

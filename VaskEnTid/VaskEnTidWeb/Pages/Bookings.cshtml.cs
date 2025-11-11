@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Reflection.PortableExecutable;
 using VaskEnTidLib.Model;
 using VaskEnTidLib.Service;
+using System.Diagnostics;
 
 namespace VaskEnTidWeb.Pages
 {
-    public class BookingModel : PageModel
+    public class BookingsModel : PageModel
     {
 
         BookingService _bookingService;
@@ -17,7 +18,7 @@ namespace VaskEnTidWeb.Pages
         [BindProperty]
         public int TempBookingID { get; set; }
 
-        public BookingModel(BookingService bs, MachineService ms)
+        public BookingsModel(BookingService bs, MachineService ms)
         {
             _bookingService = bs;
             _machineService = ms;
@@ -36,7 +37,8 @@ namespace VaskEnTidWeb.Pages
         public void OnPost() { }
         public IActionResult OnPostShow()
         {
-            return RedirectToPage("/Blog", new { BookingID = TempBookingID });
+            Debug.WriteLine("Temp Booking ID: " + TempBookingID);
+            return RedirectToPage("/Booking", new { BookingID = TempBookingID });
         }
 
     }

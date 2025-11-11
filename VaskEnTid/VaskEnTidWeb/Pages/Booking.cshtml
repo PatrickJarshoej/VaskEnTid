@@ -1,0 +1,47 @@
+﻿@page
+@model VaskEnTidWeb.Pages.BookingModel
+@{
+}
+
+@if (Model.Edit == false)
+{
+    <div class="card">
+        <h1>
+            Booking Id: @Model.SpecificBooking.BookingID
+        </h1>
+
+        <p>
+            Domicile Id: @Model.SpecificBooking.DomicileID
+        </p>
+        <p>
+            Machine Ids
+            @foreach (var i in Model.SpecificBooking.MachineIDs)
+            {
+                <text>@i </text>
+            }
+        </p>
+        <p>
+            Booking Tidspunkt: @Model.SpecificBooking.DateAndTime
+        </p>
+        <p>
+            Duration: @Model.SpecificBooking.Duration
+        </p>
+        <p>
+            TotalCost: @Model.SpecificBooking.TotalCost
+        </p>
+        <form method="post" asp-page-handler="Delete">
+            <input type="Hidden" name="TempTitle" asp-for="TempTitle" value="@Model.SpecificBlog.Title" />
+            <input type="submit" value="Delete Blog" />
+        </form>
+        <div>
+            <form method="post" asp-page-handler="Edit">
+                <input type="hidden" name="Edit" asp-for="Edit" value="true" />
+                <input type="submit" value="Edit" />
+            </form>
+        </div>
+    </div>
+}
+else if (Model.Edit == true)
+{
+    
+}
