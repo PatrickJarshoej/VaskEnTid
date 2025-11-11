@@ -83,7 +83,7 @@ namespace VaskEnTidLib.Repo
             var users = new List<User>();
             using (var connection = new SqlConnection(_connectionString))
             {
-                var command = new SqlCommand("SELECT UserID, FirstName, LastName, Email, Phone FROM Users", connection);
+                var command = new SqlCommand("SELECT UserID, FirstName, LastName, Email, Phone, Password, IsAdmin FROM Users", connection);
                 connection.Open();
                 using (var reader = command.ExecuteReader())
                 {
@@ -95,7 +95,9 @@ namespace VaskEnTidLib.Repo
                             (string)reader["FirstName"],
                             (string)reader["LastName"],
                             (string)reader["Email"],
-                            (string)reader["Phone"]
+                            (string)reader["Phone"],
+                            (string)reader["Password"],
+                            (bool)reader["IsAdmin"]
 
                             );
                         user.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
@@ -173,11 +175,13 @@ namespace VaskEnTidLib.Repo
                         {
                             var user = new User(
 
-                                (int)reader["UserID"],
-                                (string)reader["FirstName"],
-                                (string)reader["LastName"],
-                                (string)reader["Email"],
-                                (string)reader["Phone"]
+                            (int)reader["UserID"],
+                            (string)reader["FirstName"],
+                            (string)reader["LastName"],
+                            (string)reader["Email"],
+                            (string)reader["Phone"],
+                            (string)reader["Password"],
+                            (bool)reader["IsAdmin"]
 
                                 );
                             user.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
@@ -219,7 +223,9 @@ namespace VaskEnTidLib.Repo
                             (string)reader["FirstName"],
                             (string)reader["LastName"],
                             (string)reader["Email"],
-                            (string)reader["Phone"]
+                            (string)reader["Phone"],
+                            (string)reader["Password"],
+                            (bool)reader["IsAdmin"]
 
                             );
                         user.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
