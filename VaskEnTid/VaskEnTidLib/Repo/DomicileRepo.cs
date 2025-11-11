@@ -289,6 +289,7 @@ namespace VaskEnTidLib.Repo
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine($"Error: in DeleteBy in DomicileRepo");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally
