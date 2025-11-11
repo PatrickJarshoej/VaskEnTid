@@ -199,7 +199,6 @@ namespace VaskEnTidLib.Repo
                 Debug.WriteLine("Error in GetUserIDs() in DomicileRepo");
                 Debug.WriteLine($"Error: {ex}");
             }
-            finally { connection.Close(); }
             return ids;
         }
         private double GetTally(int id, SqlConnection connection)

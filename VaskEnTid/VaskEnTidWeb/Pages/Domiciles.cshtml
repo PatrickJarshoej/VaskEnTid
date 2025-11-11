@@ -8,35 +8,18 @@
 @foreach (VaskEnTidLib.Model.Domicile domicile in Model.Domiciles)
 {
     <h1>
-        Booking Id: @domicile.DomicileID
+        Domicile Id: @domicile.DomicileID
     </h1>
 
     <p>
-        Domicile Id: @domicile.Roadname
+        Adress: @domicile.Roadname @domicile.Door, @domicile.Floor. etage, @domicile.Postalcode @domicile.City, @domicile.Region, @domicile.Country
     </p>
+
     <p>
-        Domicile Id: @domicile.Region
-    </p>
-    <p>
-        Domicile Id: @domicile.City
-    </p>
-    <p>
-        Domicile Id: @domicile.Country
-    </p>
-    <p>
-        Domicile Id: @domicile.Door
-    </p>
-    <p>
-        Domicile Id: @domicile.Floor
-    </p>
-    <p>
-        Domicile Id: @domicile.Postalcode
-    </p>
-    <p>
-        User Ids
+        User Ids:
         @foreach (var i in domicile.UserIDs)
         {
-           @i             
+            <text>@i  </text>
         }
     </p>
     <p>
