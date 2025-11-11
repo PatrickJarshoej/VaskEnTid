@@ -162,7 +162,7 @@ namespace VaskEnTidLib.Repo
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Error in GetByID() in DomicileRepo");
+                    Debug.WriteLine("Error in GetByID() in MachineRepo");
                     Debug.WriteLine($"Error: {ex}");
                 }
                 finally { connection.Close(); }
@@ -173,7 +173,29 @@ namespace VaskEnTidLib.Repo
 
         public void Update(Machine theMachine)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var command = new SqlCommand("UPDATE Machines SET Type=@Type, TypeNumber=@TypeNumber, Status=@Status, Cost=@Cost WHERE MachineID=@MachineID ", connection);
+                    command.Parameters.AddWithValue("@Type", nameof(theMachine.Type));
+                    command.Parameters.AddWithValue("@TypeNumber", theMachine.TypeNumber);
+                    command.Parameters.AddWithValue("@Status", nameof(theMachine.Status));
+                    command.Parameters.AddWithValue("@Cost", theMachine.Cost);
+                    command.Parameters.AddWithValue("@MachineID", theMachine.MachineID);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error in Update() in MachineRepo");
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
     }
 }
