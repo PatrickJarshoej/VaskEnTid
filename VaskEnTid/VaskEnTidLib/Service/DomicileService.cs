@@ -10,7 +10,7 @@ using VaskEnTidLib.Repo;
 
 namespace VaskEnTidLib.Service
 {
-    internal class DomicileService
+    public class DomicileService
     {
         private IDomicileRepo _domicileRepo;
 
@@ -36,7 +36,7 @@ namespace VaskEnTidLib.Service
         {
             if (_domicileRepo.GetByID(theDomicile.DomicileID) == null)
             {
-                Debug.WriteLine("Booking does not exist");
+                Debug.WriteLine("Domicile does not exist");
             }
             else
             {
@@ -59,8 +59,8 @@ namespace VaskEnTidLib.Service
         public double CalcPriceTallyByID(double newCost, int ID)
         {
             _domicileRepo.CalculatePriceTallyByID(newCost, ID);
-            return GetByID(ID).PriceTally;
             
+            return GetByID(ID).PriceTally;
         }
     }
 }

@@ -5,13 +5,26 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-			@foreach (VaskEnTidLib.Model.Booking booking in Model.Bookings)
-			{
-				<h1>
-					@booking.BookingID
-				</h1>
+@foreach (VaskEnTidLib.Model.Booking booking in Model.Bookings)
+{
+    <h1>
+        Booking Id: @booking.BookingID
+    </h1>
 
-				<p>
-					@booking.
-				</p>
-			}
+    <p>
+        Domicile Id: @booking.DomicileID
+    </p>
+    <p>
+        Machine Ids
+        @foreach (var i in booking.MachineIDs)
+        {
+           @i             
+        }
+    </p>
+    <p>
+        Duration: @booking.Duration
+    </p>
+    <p>
+        TotalCost: @booking.TotalCost
+    </p>
+}

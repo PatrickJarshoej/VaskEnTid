@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using VaskEnTidLib.Model;
 
 namespace VaskEnTidLib.Repo
 {
-    internal interface IDomicileRepo
+    public interface IDomicileRepo
     {
         void AddUserIDByDomID(int userID, int domicileID);
         void Add(Domicile theDomicile);
