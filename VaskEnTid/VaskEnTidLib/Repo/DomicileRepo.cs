@@ -153,7 +153,7 @@ namespace VaskEnTidLib.Repo
                             (
 
                                 (string)reader["Roadname"],
-                                (string)reader["Postalcode"],
+                                (int)reader["Postalcode"],
                                 (string)reader["Floor"],
                                 (string)reader["Door"],
                                 (string)reader["City"],
