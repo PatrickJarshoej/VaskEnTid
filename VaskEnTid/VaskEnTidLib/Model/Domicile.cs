@@ -13,7 +13,7 @@ namespace VaskEnTidLib.Model
         public List<int> UserIDs { get; private set; }
 
         public string Roadname { get; private set; }
-        public string Postalcode { get; private set; }
+        public int Postalcode { get; private set; }
         public string Floor { get; private set; }
         public string Door { get; private set; }
         public string City { get; private set; }
@@ -21,7 +21,7 @@ namespace VaskEnTidLib.Model
         public string Country { get; private set; }
         public double PriceTally { get; private set; }
         List<int> _defaultList = new List<int>(0);
-        public Domicile(string roadname, string postalcode, string floor, string door, string city, string region, string country, List<int> userIDs, int domicileID=0, double priceTally = 0)
+        public Domicile(string roadname, int postalcode, string floor, string door, string city, string region, string country, List<int> userIDs, int domicileID=0, double priceTally = 0)
         {
             DomicileID = domicileID;
             UserIDs = userIDs;
@@ -34,7 +34,7 @@ namespace VaskEnTidLib.Model
             Country = country;
             PriceTally = priceTally;
         }
-        public Domicile(string roadname, string postalcode, string floor, string door, string city, string region, string country, int domicileID = 0, double priceTally = 0)
+        public Domicile(string roadname, int postalcode, string floor, string door, string city, string region, string country, int domicileID = 0, double priceTally = 0)
         {
             DomicileID = domicileID;
             UserIDs = new List<int>();

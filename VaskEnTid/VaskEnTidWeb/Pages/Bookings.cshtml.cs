@@ -12,6 +12,9 @@ namespace VaskEnTidWeb.Pages
         //MachineService _machineService;
         public List<Booking> Bookings {  get; set; }
 
+        [BindProperty]
+        public int TempBookingID { get; set; }
+
         public BookingModel(BookingService bs)
         {
             _bookingService = bs;
@@ -27,7 +30,11 @@ namespace VaskEnTidWeb.Pages
 
         }
         public void OnPost() { }
-        
+        public IActionResult OnPostShow()
+        {
+            return RedirectToPage("/Blog", new { BookingID = TempBookingID });
+        }
+
     }
 
 }
