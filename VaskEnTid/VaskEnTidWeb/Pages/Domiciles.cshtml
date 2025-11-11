@@ -12,31 +12,14 @@
     </h1>
 
     <p>
-         Roadname: @domicile.Roadname
+        Adress: @domicile.Roadname @domicile.Door, @domicile.Floor. etage, @domicile.Postalcode @domicile.City, @domicile.Region, @domicile.Country
     </p>
+
     <p>
-        Region: @domicile.Region
-    </p>
-    <p>
-        City: @domicile.City
-    </p>
-    <p>
-        Country: @domicile.Country
-    </p>
-    <p>
-        Door: @domicile.Door
-    </p>
-    <p>
-        Floor: @domicile.Floor
-    </p>
-    <p>
-        Postalcode: @domicile.Postalcode
-    </p>
-    <p>
-        User Ids
+        User Ids:
         @foreach (var i in domicile.UserIDs)
         {
-           @i             
+            <text>@i  </text>
         }
     </p>
     <p>
