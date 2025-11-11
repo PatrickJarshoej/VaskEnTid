@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Booking n shit";
 }
+<link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
 <h1>@ViewData["Title"]</h1>
+
 
 @foreach (VaskEnTidLib.Model.Booking booking in Model.Bookings)
 {
@@ -19,8 +21,11 @@
             Machine Ids
             @foreach (var i in booking.MachineIDs)
             {
-               @i             
+               <text>@i </text>
             }
+        </p>
+        <p>
+            Booking Tidspunkt: @booking.DateAndTime
         </p>
         <p>
             Duration: @booking.Duration
@@ -29,7 +34,7 @@
             TotalCost: @booking.TotalCost
         </p>
         <div>
-            <!--This button runs the OnPostShow method and defines a temporary title we can send over -->
+            <!--This button runs the OnPostShow method and defines a temporary booking id we can send over -->
             <form method="post" asp-page-handler="Show">
                 <!--to the next page -->
                 <input type="hidden" name="BookingID" asp-for="TempBookingID" value="@booking.BookingID" />

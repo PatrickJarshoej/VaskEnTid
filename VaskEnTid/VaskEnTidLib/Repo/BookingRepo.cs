@@ -108,7 +108,7 @@ namespace VaskEnTidLib.Repo
         private List<int> GetMachineIDs(int id, SqlConnection connection)
         {
             List<int> ids = new();
-            Debug.WriteLine(id);
+            //Debug.WriteLine(id);
             //var command = new SqlCommand("select m.* from Machines m, MapMachineID mm where mm.BookingID = @ID and m.MachineID = mm.MachineID", connection);
             var command = new SqlCommand("select * from MapMachineID where BookingID = @ID ", connection);
             command.Parameters.AddWithValue("@ID", id);
