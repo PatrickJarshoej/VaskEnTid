@@ -10,6 +10,8 @@ namespace VaskEnTidWeb.Pages
 
         DomicileService _domicileService;
         public List<Domicile> Domiciles {  get; set; }
+        [BindProperty]
+        public int TempDomicileID { get; set; }
 
         public DomicileModel(DomicileService ds)
         {
@@ -26,7 +28,11 @@ namespace VaskEnTidWeb.Pages
 
         }
         public void OnPost() { }
-        
+        public IActionResult OnPostShow()
+        {
+            return RedirectToPage("/Blog", new { DomicileID = TempDomicileID });
+        }
+
     }
 
 }

@@ -48,7 +48,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("DELETE FROM MapDomicileID WHERE DomicileID = @ID", connection);
+                    var command = new SqlCommand("DELETE FROM MapDomicileID WHERE UserID = @ID", connection);
                     command.Parameters.AddWithValue("@ID", userID);
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -253,7 +253,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("UPDATE Domiciles SET RoadName=@roadName, Floor=@floor, Door=@door, PostalCode=@postalcode, City=@city, Region=@region, Country=@country Where DomicileID=@DomicileID ", connection);
+                    var command = new SqlCommand("UPDATE Domiciles SET RoadName=@roadName, Floor=@floor, Door=@door, PostalCode=@postalcode, City=@city, Region=@region, Country=@country WHERE DomicileID=@DomicileID ", connection);
                     command.Parameters.AddWithValue("@roadName", theDomicile.Roadname);
                     command.Parameters.AddWithValue("@floor", theDomicile.Floor);
                     command.Parameters.AddWithValue("@door", theDomicile.Door);
