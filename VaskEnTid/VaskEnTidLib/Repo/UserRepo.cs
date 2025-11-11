@@ -16,7 +16,7 @@ namespace VaskEnTidLib.Repo
         private string _connectionString;
         public UserRepo()
         {
-            _connectionString = "Data Source=mssql15.unoeuro.com; ID=arvedlund_com; password=BdpAFfg62xzDnR3wkcht; Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=true;";
+            _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com; password=BdpAFfg62xzDnR3wkcht; Database=Test;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=true;";
         }
         /// <summary>
         /// Add's a User to the Users database
