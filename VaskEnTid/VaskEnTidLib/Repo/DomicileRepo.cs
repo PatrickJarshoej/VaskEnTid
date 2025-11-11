@@ -109,7 +109,7 @@ namespace VaskEnTidLib.Repo
                             var domicile = new Domicile
                             (
                                 (string)reader["Roadname"],
-                                (string)reader["Postalcode"],
+                                (int)reader["Postalcode"],
                                 (string)reader["Floor"],
                                 (string)reader["Door"],
                                 (string)reader["City"],
