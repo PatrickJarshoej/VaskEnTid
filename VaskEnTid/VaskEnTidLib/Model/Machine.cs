@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace VaskEnTidLib.Model
 {
-    public enum Type { Washingmachine, Dryer, Rollingmachine}
-    public enum Status { Available, Unavailable, UnderService}
+    public enum Type { Washer, Dryer, Rollingmachine }
+    public enum Status { Available, Unavailable, UnderService }
     public class Machine
     {
         public TimeOnly MinimumTime { get; private set; }
@@ -17,21 +17,46 @@ namespace VaskEnTidLib.Model
         public double Cost { get; private set; }
         public int MachineID { get; private set; }
 
+        public TimeOnly WashTime = new(0, 45);
+        public TimeOnly DryerTime = new(0, 20);
+        public TimeOnly RollingTime = new(0, 30);
         public Machine()
         {
 
         }
-        public Machine(TimeOnly minimumTime, int typeNumber, Type type, Status status, double cost)
+        public Machine(int typeNumber, Type type, Status status, double cost)
         {
-            MinimumTime = minimumTime;
+            if (Type == Type.Washer)
+            {
+                MinimumTime = WashTime;
+            }
+            else if (Type == Type.Dryer)
+            { 
+                MinimumTime = DryerTime; 
+            }
+            else if (Type == Type.Rollingmachine)
+            { 
+                MinimumTime = RollingTime;
+            }
             TypeNumber = typeNumber;
             Type = type;
             Status = status;
             Cost = cost;
         }
-        public Machine(TimeOnly minimumTime, int typeNumber, Type type, Status status, double cost, int machineID)
+        public Machine(int typeNumber, Type type, Status status, double cost, int machineID)
         {
-            MinimumTime = minimumTime;
+            if (Type == Type.Washer)
+            {
+                MinimumTime = WashTime;
+            }
+            else if (Type == Type.Dryer)
+            {
+                MinimumTime = DryerTime;
+            }
+            else if (Type == Type.Rollingmachine)
+            {
+                MinimumTime = RollingTime;
+            }
             TypeNumber = typeNumber;
             Type = type;
             Status = status;
