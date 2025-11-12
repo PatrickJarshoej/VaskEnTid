@@ -33,6 +33,13 @@ namespace VaskEnTidLib.Repo
                     command.Parameters.AddWithValue("@TotalCost", booking.TotalCost);   
                     connection.Open();
                     command.ExecuteNonQuery();
+                    foreach (var id in booking.MachineIDs)
+                    {
+                        var command2 = new SqlCommand("INSERT INTO MapMachineID (MachineID, BookingID) VALUES (@MachineID, @BookingID);", connection);
+                        command2.Parameters.AddWithValue("@MachineID", id);
+                        command2.Parameters.AddWithValue("@BookingID", booking.BookingID);
+                        command2.ExecuteNonQuery();
+                    }
                 }
                 catch (Exception ex)
                 {

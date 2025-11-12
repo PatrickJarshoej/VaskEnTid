@@ -37,7 +37,7 @@ namespace VaskEnTidWeb.Pages
         {
         }
 
-        public void OnPostCreate()
+        public IActionResult OnPostCreate()
         {
             //Debug.Write("Date and Time: " + DateAndTime + ", Domicile ID: " + DomicileID + ", Machine IDs: ");
             //foreach(var id in MachineIDs)
@@ -46,6 +46,7 @@ namespace VaskEnTidWeb.Pages
             //}
             //Debug.WriteLine(" ");
             _bookingService.Create(DateAndTime, DomicileID, MachineIDs);
+            return RedirectToPage("/Index");
         }
         public void OnPost() { }
         public IActionResult OnPostShow()
