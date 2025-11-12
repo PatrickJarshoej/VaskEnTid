@@ -18,6 +18,18 @@ namespace VaskEnTidWeb.Pages
         public List<User> Users { get; set; } = new List<User>();
         [BindProperty]
         public Booking Bookings { get; set; } = new();
+        [BindProperty]
+        public string CreateFirstName { get; set; } = "John";
+        [BindProperty]
+        public string CreateLastName { get; set; } = "Doe";
+        [BindProperty]
+        public string CreatePhone { get; set; } = "Not a number";
+        [BindProperty]
+        public string CreateEmail { get; set; } = "Not@Mail.Fix";
+        [BindProperty]
+        public string CreatePassword { get; set; } = "1234";
+        [BindProperty]
+        public bool CreateAdmin { get; set; } = false;
 
         private readonly ILogger<ProfileModel> _logger;
 
@@ -42,6 +54,11 @@ namespace VaskEnTidWeb.Pages
                 Bookings = _bookingService.GetByDomicileID(UserMe.DomicileID[0]);
                 Users = _userService.GetAll();
             }
+        }
+        public IActionResult OnPostCreateUser()
+        {
+            _userService.CreateUser(CreateFirstName, CreateLastName, CreateEmail, CreatePhone, CreatePassword,CreateAdmin);
+            return RedirectToPage("/Profile", UserMe);
         }
     }
 

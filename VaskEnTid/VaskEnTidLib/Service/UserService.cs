@@ -34,9 +34,9 @@ namespace VaskEnTidLib.Service
             users = _userRepo.GetAll();
             return users;
         }
-        public void CreateUser(string name, string lastName, List<int> domicileID, string email, string phone)
+        public void CreateUser(string name, string lastName, string email, string phone, string password, bool isAdmin)
         {
-            User user = new(name, lastName, domicileID, email, phone);
+            User user = new(name, lastName, email, phone, password, isAdmin);
             _userRepo.Add(user);
         }
         public User CheckPassword(int UserID, string Password)

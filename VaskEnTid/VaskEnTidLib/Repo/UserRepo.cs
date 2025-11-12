@@ -27,12 +27,13 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("INSERT INTO Users (FirstName, LastName, DomicileID, Email, Phone) VALUES (@FirstName, @LastName, @DomicileID, @Email, @Phone)", connection);
+                    var command = new SqlCommand("INSERT INTO Users (FirstName, LastName, Email, Phone, Password, IsAdmin) VALUES (@FirstName, @LastName, @Email, @Phone, @Password, @IsAdmin)", connection);
                     command.Parameters.AddWithValue("@FirstName", user.FirstName);
                     command.Parameters.AddWithValue("@LastName", user.LastName);
-                    command.Parameters.AddWithValue("@DomicileID", user.DomicileID);
                     command.Parameters.AddWithValue("@Email", user.Email);
                     command.Parameters.AddWithValue("@Phone", user.Phone);
+                    command.Parameters.AddWithValue("@Password", user.Password);
+                    command.Parameters.AddWithValue("@IsAdmin", user.IsAdmin);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }

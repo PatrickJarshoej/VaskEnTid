@@ -42,13 +42,14 @@ namespace VaskEnTidLib.Model
             Password = password;
             IsAdmin = isAdmin;
         }
-        public User(string firstname, string lastName, List<int> domicileID, string email, string phone)
+        public User(string firstname, string lastName, string email, string phone, string password, bool isAdmin)
         {
             FirstName = firstname;
             LastName = lastName;
-            DomicileID = domicileID;
             Email = email;
             Phone = phone;
+                        Password = password;
+            IsAdmin = isAdmin;
         }
         public User(string firstname, string lastName, int userID, List<int> domicileID, string email, string phone)
         {
