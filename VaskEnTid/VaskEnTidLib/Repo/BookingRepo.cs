@@ -64,6 +64,7 @@ namespace VaskEnTidLib.Repo
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine("Error in DeleteByID() in BookingRepo");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally
@@ -119,7 +120,7 @@ namespace VaskEnTidLib.Repo
                 {
                     while (reader.Read())
                     {
-                        Debug.WriteLine((int)reader["MachineID"]);
+                        //Debug.WriteLine((int)reader["MachineID"]);
                         ids.Add((int)reader["MachineID"]);
                     }
                 }
@@ -143,7 +144,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("SELECT * FROM MapDomicileID WHERE BookingID = @ID", connection);
+                    var command = new SqlCommand("SELECT * FROM Bookings WHERE DomicileID = @ID", connection);
                     command.Parameters.AddWithValue("@ID", id);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
