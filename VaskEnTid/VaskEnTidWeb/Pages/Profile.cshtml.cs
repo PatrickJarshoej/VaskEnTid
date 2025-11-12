@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualBasic;
 using VaskEnTidLib.Model;
 using VaskEnTidLib.Service;
-using VaskEnTidLib.Service;
 
 namespace VaskEnTidWeb.Pages
 {
@@ -36,15 +35,9 @@ namespace VaskEnTidWeb.Pages
             {
                 RedirectToPage("/Log-in");
             }
-            Console.WriteLine(user.DomicileID[0]);
-            Console.WriteLine(user.DomicileID.Count());
-
-            int i = 0;
-            foreach (int domicileID in UserMe.DomicileID)
-            {
-                bookings[i] = _bookingService.GetByDomicileID(user.DomicileID[i]);
-                i++;
-            }
+            Console.WriteLine(UserMe.DomicileID[0]);
+            Console.WriteLine(UserMe.DomicileID.Count());
+            Bookings = _bookingService.GetByDomicileID(UserMe.DomicileID[0]);
         }
     }
 
