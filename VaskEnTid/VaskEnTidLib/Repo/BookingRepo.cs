@@ -26,7 +26,6 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    Console.WriteLine("What tthe fuck");
                     var command = new SqlCommand("INSERT INTO Bookings (DateAndTime, DomicileID, Duration, TotalCost) VALUES (@DateAndTime, @DomicileID, @Duration, @TotalCost);", connection);
                     command.Parameters.AddWithValue("@DateAndTime", booking.DateAndTime);
                     command.Parameters.AddWithValue("@DomicileID", booking.DomicileID);
