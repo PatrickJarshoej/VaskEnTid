@@ -28,6 +28,12 @@ namespace VaskEnTidLib.Service
         {
 
         }
+        public List<User> GetAll()
+        {
+            List<User> users = new();
+            users = _userRepo.GetAll();
+            return users;
+        }
         public void CreateUser(string name, string lastName, List<int> domicileID, string email, string phone)
         {
             User user = new(name, lastName, domicileID, email, phone);

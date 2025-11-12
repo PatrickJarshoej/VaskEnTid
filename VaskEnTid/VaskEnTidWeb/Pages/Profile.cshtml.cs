@@ -15,6 +15,8 @@ namespace VaskEnTidWeb.Pages
         [BindProperty]
         public User UserMe { get; set; } = new();
         [BindProperty]
+        public List<User> Users { get; set; } = new List<User>();
+        [BindProperty]
         public Booking Bookings { get; set; } = new();
 
         private readonly ILogger<ProfileModel> _logger;
@@ -35,9 +37,11 @@ namespace VaskEnTidWeb.Pages
             {
                 RedirectToPage("/Log-in");
             }
-            Console.WriteLine(UserMe.DomicileID[0]);
-            Console.WriteLine(UserMe.DomicileID.Count());
-            Bookings = _bookingService.GetByDomicileID(UserMe.DomicileID[0]);
+            else
+            {
+                Bookings = _bookingService.GetByDomicileID(UserMe.DomicileID[0]);
+                Users = _userService.GetAll();
+            }
         }
     }
 
