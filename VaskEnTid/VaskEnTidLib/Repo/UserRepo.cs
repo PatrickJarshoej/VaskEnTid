@@ -108,7 +108,8 @@ namespace VaskEnTidLib.Repo
                             {
                                 if (reader2.Read())
                                 {
-                                    user.DomicileID = GetDomicileIDs((int)reader2["DomicileID"], connection);
+                                    List<int> domID = new List<int>((int)reader2["DomicileID"]);
+                                    user.DomicileID = domID;
                                 }
                             }
 
