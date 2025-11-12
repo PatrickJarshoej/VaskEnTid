@@ -204,6 +204,7 @@ namespace VaskEnTidLib.Repo
                 try
                 {
                     var command = new SqlCommand("UPDATE Bookings SET DateAndTime=@DateAndTime, Duration=@Duration, TotalCost=@TotalCost Where BookingID=@BookingID ", connection);
+                    command.Parameters.AddWithValue("@BookingID", booking.BookingID);
                     command.Parameters.AddWithValue("@DateAndTime", booking.DateAndTime);
                     command.Parameters.AddWithValue("@Duration", booking.Duration);
                     command.Parameters.AddWithValue("@TotalCost", booking.TotalCost);
@@ -213,7 +214,7 @@ namespace VaskEnTidLib.Repo
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Error in Add() in DomicileRepo");
+                    Debug.WriteLine("Error in Booking() in BookingRepo");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally

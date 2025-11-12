@@ -28,5 +28,14 @@ namespace VaskEnTidLib.Model
         {
             MachineIDs = machineIDs;
         }
+        public Booking() 
+        {
+            MachineIDs = new List<int>();
+        }
+
+        public override string ToString()
+        {
+            return $"ID: {BookingID}, Domicile ID: {DomicileID}, DateAndTime: {DateAndTime}, Duration: {Duration}";
+        }
     }
 }

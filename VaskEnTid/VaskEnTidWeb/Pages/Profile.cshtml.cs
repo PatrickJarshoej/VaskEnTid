@@ -36,10 +36,13 @@ namespace VaskEnTidWeb.Pages
             {
                 RedirectToPage("/Log-in");
             }
+            Console.WriteLine(user.DomicileID[0]);
+            Console.WriteLine(user.DomicileID.Count());
+
             int i = 0;
             foreach (int domicileID in UserMe.DomicileID)
             {
-                Bookings = _bookingService.GetByDomicileID(UserMe.DomicileID[0]);
+                bookings[i] = _bookingService.GetByDomicileID(user.DomicileID[i]);
                 i++;
             }
         }
