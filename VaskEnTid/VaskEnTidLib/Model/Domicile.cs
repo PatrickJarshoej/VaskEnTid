@@ -20,7 +20,6 @@ namespace VaskEnTidLib.Model
         public string Region{ get; private set; }
         public string Country { get; private set; }
         public double PriceTally { get; private set; }
-        List<int> _defaultList = new List<int>(0);
         public Domicile(string roadname, int postalcode, string floor, string door, string city, string region, string country, List<int> userIDs, int domicileID=0, double priceTally = 0)
         {
             DomicileID = domicileID;
