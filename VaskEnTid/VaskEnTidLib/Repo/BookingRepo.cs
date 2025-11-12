@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using VaskEnTidLib.Model;
 using Microsoft.Data.SqlClient;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace VaskEnTidLib.Repo
 {
@@ -137,6 +138,7 @@ namespace VaskEnTidLib.Repo
         public Booking GetByDomicileID(int id)
         {
             Booking booking = null;
+            int bookingID = 0;
             using (var connection = new SqlConnection(_connectionString))
             {
                 try
@@ -148,9 +150,9 @@ namespace VaskEnTidLib.Repo
                     {
                         if (reader.Read())
                         {
-                            booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeSpan)reader["Duration"], decimal.ToDouble((decimal)reader["TotalCost"]), (int)reader["BookingID"]);
-                            booking.MachineIDs = GetMachineIDs((int)reader["BookingID"], connection);
+                            bookingID = (int)reader["BookingID"];
                         }
+
                     }
                 }
                 catch (Exception ex)
@@ -162,9 +164,10 @@ namespace VaskEnTidLib.Repo
                 {
                     connection.Close();
                 }
+                booking = GetByID(bookingID);
             }
-
             return booking;
+
         }
 
         public Booking GetByID(int id)
