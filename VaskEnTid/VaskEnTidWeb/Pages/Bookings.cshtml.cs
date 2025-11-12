@@ -17,7 +17,13 @@ namespace VaskEnTidWeb.Pages
 
         [BindProperty]
         public int TempBookingID { get; set; }
-    
+        [BindProperty]
+        public DateTime DateAndTime { get; set; }
+        [BindProperty]
+        public int DomicileID { get; set; }
+        [BindProperty]
+        public List<int> MachineIDs { get; set; }
+
 
         public BookingsModel(BookingService bs, MachineService ms)
         {
@@ -33,7 +39,13 @@ namespace VaskEnTidWeb.Pages
 
         public void OnPostCreate()
         {
-
+            //Debug.Write("Date and Time: " + DateAndTime + ", Domicile ID: " + DomicileID + ", Machine IDs: ");
+            //foreach(var id in MachineIDs)
+            //{
+            //    Debug.Write(id);
+            //}
+            //Debug.WriteLine(" ");
+            _bookingService.Create(DateAndTime, DomicileID, MachineIDs);
         }
         public void OnPost() { }
         public IActionResult OnPostShow()

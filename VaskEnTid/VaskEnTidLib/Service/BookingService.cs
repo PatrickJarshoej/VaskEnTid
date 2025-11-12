@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.Identity.Client;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,9 +25,22 @@ namespace VaskEnTidLib.Service
 
         public void Create(DateTime dateAndTime, int domicileID, List<int> machineIDs)
         {
-            TimeSpan duration = new TimeSpan();
-            Booking booking = new(dateAndTime,domicileID,machineIDs,duration,0,0);
-            _bookingRepo.Add(booking);
+            try
+            {
+                if (dateAndTime >= DateTime.Now)
+                {
+                    Booking booking = new(dateAndTime, domicileID, machineIDs, CalcDuration(machineIDs), CalcCost(machineIDs), 0);
+                    Debug.WriteLine(booking);
+                    _bookingRepo.Add(booking);
+                }
+                else { Debug.WriteLine("DateTime Is Invalid"); }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error in Create() in BookingService");
+                Debug.WriteLine("Error: "+ex);
+            }
+           
         }
 
         public List<Booking> GetAll()
@@ -59,22 +73,34 @@ namespace VaskEnTidLib.Service
             Booking b = _bookingRepo.GetByID(id);
             if (b == null)
             {
-                b = new Booking(DateTime.MinValue, 0, TimeSpan.Zero, 0,0);
+                b = new Booking(DateTime.MinValue, 0, TimeSpan.MinValue, 0,0);
             }
             return b;
         }
 
-        public double CalcCost(Booking booking)
+        public double CalcCost(List<int> machineIDs)
         {
             double cost = 0;
-            foreach (var m in booking.MachineIDs)
+            foreach (var m in machineIDs)
             {
                 Model.Machine machine = _machineRepo.GetByID(m);
                 cost += machine.Cost;
             }
             return cost;
         }
+        public TimeSpan CalcDuration(List<int> machineIDs)
+        {
+            TimeSpan duration = new TimeSpan();
 
-
+            foreach(var m in machineIDs)
+            {
+                Model.Machine machine = _machineRepo.GetByID(m);
+                if (duration < machine.MinimumTime)
+                {
+                    duration = machine.MinimumTime.Add(new TimeSpan(0,10,0));
+                }
+            }
+            return duration;
+        }
     }
 }

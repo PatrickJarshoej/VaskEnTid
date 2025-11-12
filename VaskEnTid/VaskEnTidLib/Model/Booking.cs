@@ -35,7 +35,7 @@ namespace VaskEnTidLib.Model
 
         public override string ToString()
         {
-            return $"ID: {BookingID}, Domicile ID: {DomicileID}, DateAndTime: {DateAndTime}, Duration: {Duration}";
+            return $"ID: {BookingID}, Domicile ID: {DomicileID}, DateAndTime: {DateAndTime}, Duration: {Duration}, Total Cost: {TotalCost}";
         }
     }
 }

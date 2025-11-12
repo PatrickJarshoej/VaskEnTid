@@ -26,10 +26,9 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("INSERT INTO Bookings (DateAndTime, DomicileID, MachineIDs, Duration, TotalCost) VALUES (@DateAndTime, @DomicileID, @MachineIDs, @Duration, @TotalCost)", connection);
+                    var command = new SqlCommand("INSERT INTO Bookings (DateAndTime, DomicileID, Duration, TotalCost) VALUES (@DateAndTime, @DomicileID, @Duration, @TotalCost);", connection);
                     command.Parameters.AddWithValue("@DateAndTime", booking.DateAndTime);
                     command.Parameters.AddWithValue("@DomicileID", booking.DomicileID);
-                    command.Parameters.AddWithValue("@MachineIDs", booking.MachineIDs);
                     command.Parameters.AddWithValue("@Duration", booking.Duration);
                     command.Parameters.AddWithValue("@TotalCost", booking.TotalCost);   
                     connection.Open();
@@ -37,6 +36,7 @@ namespace VaskEnTidLib.Repo
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine("Error in Add() In BookingRepo");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally
@@ -57,7 +57,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("DELETE FROM Bookings WHERE ID = @ID", connection);
+                    var command = new SqlCommand("DELETE FROM Bookings WHERE BookingID = @ID", connection);
                     command.Parameters.AddWithValue("@ID", id);
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -96,7 +96,7 @@ namespace VaskEnTidLib.Repo
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"you did something wrong");
+                    Debug.WriteLine($"Error in GetAll() in BookingRepo");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally
@@ -110,8 +110,6 @@ namespace VaskEnTidLib.Repo
         private List<int> GetMachineIDs(int id, SqlConnection connection)
         {
             List<int> ids = new();
-            Debug.WriteLine(id);
-            //var command = new SqlCommand("select m.* from Machines m, MapMachineID mm where mm.BookingID = @ID and m.MachineID = mm.MachineID", connection);
             var command = new SqlCommand("select * from MapMachineID where BookingID = @ID ", connection);
             command.Parameters.AddWithValue("@ID", id);
             try
@@ -120,7 +118,6 @@ namespace VaskEnTidLib.Repo
                 {
                     while (reader.Read())
                     {
-                        //Debug.WriteLine((int)reader["MachineID"]);
                         ids.Add((int)reader["MachineID"]);
                     }
                 }
@@ -200,7 +197,6 @@ namespace VaskEnTidLib.Repo
                 }
             }
             return booking;
-            //throw new NotImplementedException();
         }
 
         public void Update(Booking booking)
