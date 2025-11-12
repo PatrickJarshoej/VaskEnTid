@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -32,15 +33,18 @@ namespace VaskEnTidLib.Service
         {
             return _domicileRepo.GetAll();
         }
-        public void Update(Domicile theDomicile)
+        public void Update(int domicileID, string roadname, string door, string city, string region, string country)
         {
+            Domicile theDomicile=_domicileRepo.GetByID(domicileID);
+            Domicile tempDomicile = new Domicile(roadname, theDomicile.Postalcode, theDomicile.Floor, door, city, region, country, theDomicile.UserIDs, domicileID, theDomicile.PriceTally);
             if (_domicileRepo.GetByID(theDomicile.DomicileID) == null)
             {
                 Debug.WriteLine("Domicile does not exist");
             }
             else
             {
-                _domicileRepo.Update(theDomicile);
+                //Domicile theDomicile = new Domicile(roadname, postalcode, floor, door, city, region, country, userIDs, domicileID = 0, priceTally = 0);
+                _domicileRepo.Update(tempDomicile);
             }
         }
         public void DeleteByID(int domID) 
