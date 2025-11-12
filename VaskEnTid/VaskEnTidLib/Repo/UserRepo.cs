@@ -183,7 +183,17 @@ namespace VaskEnTidLib.Repo
                             (bool)reader["IsAdmin"]
 
                                 );
-                            user.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
+                            List<int> domicileIDs = new List<int>();
+                            var command3 = new SqlCommand("SELECT * FROM MapDomicileID WHERE UserID = @Id", connection);
+                            command3.Parameters.AddWithValue("@Id", UserIDs);
+                            using (var reader3 = command3.ExecuteReader())
+                            {
+                                while (reader3.Read())
+                                {
+                                    domicileIDs.Add((int)reader3["DomicileID"]);
+                                }
+                            }
+                            user.DomicileID = domicileIDs;
                             DomicileUsers.Add(user);
                         }
                     }
@@ -207,9 +217,9 @@ namespace VaskEnTidLib.Repo
         public User GetByID(int id)
         {
             Console.WriteLine("hep1");
-            User IDuser = new();
             using (var connection = new SqlConnection(_connectionString))
             {
+                User IDuser = new();
                 try
                 {
                     var command = new SqlCommand("SELECT * FROM Users WHERE UserID = @ID", connection);
@@ -217,47 +227,44 @@ namespace VaskEnTidLib.Repo
                     connection.Open();
                     using (var reader = command.ExecuteReader())
                     {
-                        Console.WriteLine("hep2");
-                        //IDuser = new User(
-
-                        //    (int)reader["UserID"],
-                        //    (string)reader["FirstName"],
-                        //    (string)reader["LastName"],
-                        //    (string)reader["Email"],
-                        //    (string)reader["Phone"],
-                        //    (string)reader["Password"],
-                        //    (bool)reader["IsAdmin"]
-                        //    );
-                        Console.WriteLine("ID");
+                        Debug.WriteLine("ID");
                         IDuser.UserID = ((int)reader["UserID"]);
-                        Console.WriteLine("FN");
+                        Debug.WriteLine("FN");
                         IDuser.FirstName = ((string)reader["FirstName"]);
-                        Console.WriteLine("LN");
+                        Debug.WriteLine("LN");
                         IDuser.LastName = ((string)reader["LastName"]);
-                        Console.WriteLine("EM");
+                        Debug.WriteLine("EM");
                         IDuser.Email = ((string)reader["Email"]);
-                        Console.WriteLine("Phone");
+                        Debug.WriteLine("Phone");
                         IDuser.Phone = ((string)reader["Phone"]);
-                        Console.WriteLine("Pass");
+                        Debug.WriteLine("Pass");
                         IDuser.Password = ((string)reader["Password"]);
-                        Console.WriteLine("IsAdmin");
+                        Debug.WriteLine("IsAdmin");
                         IDuser.IsAdmin = ((bool)reader["IsAdmin"]);
 
-                        Console.WriteLine("hep3");
-                        IDuser.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
+                        List<int> domicileIDs = new List<int>();
+                        var command2 = new SqlCommand("SELECT * FROM MapDomicileID WHERE UserID = @Id", connection);
+                        command2.Parameters.AddWithValue("@Id", id);
+                        using (var reader2 = command2.ExecuteReader())
+                        {
+                            while (reader2.Read())
+                            {
+                                domicileIDs.Add((int)reader2["DomicileID"]);
+                            }
+                        }
+                        IDuser.DomicileID = domicileIDs;
                     }
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error: {ex.Message}");
-                    Console.WriteLine("hep4");
                 }
                 finally
                 {
                     connection.Close();
                 }
+                return IDuser;
             }
-            return IDuser;
         }
 
         public void Update(User user)
@@ -271,7 +278,7 @@ namespace VaskEnTidLib.Repo
                 try
                 {
 
-                    var command = new SqlCommand("SELECT UserID FROM Users WHERE UserID = @ID and Password = @Password", connection);
+                    var command = new SqlCommand("SELECT * FROM Users WHERE UserID = @ID and Password = @Password", connection);
                     command.Parameters.AddWithValue("@ID", userID);
                     command.Parameters.AddWithValue("@Password", password);
                     connection.Open();
@@ -281,9 +288,33 @@ namespace VaskEnTidLib.Repo
                         if (reader.Read())
                         {
                             user.UserID = (int)reader["UserID"];
-                            user = GetByID(userID);
-                            return user;
+                            Debug.WriteLine("ID");
+                            user.UserID = ((int)reader["UserID"]);
+                            Debug.WriteLine("FN");
+                            user.FirstName = ((string)reader["FirstName"]);
+                            Debug.WriteLine("LN");
+                            user.LastName = ((string)reader["LastName"]);
+                            Debug.WriteLine("EM");
+                            user.Email = ((string)reader["Email"]);
+                            Debug.WriteLine("Phone");
+                            user.Phone = ((string)reader["Phone"]);
+                            Debug.WriteLine("Pass");
+                            user.Password = ((string)reader["Password"]);
+                            Debug.WriteLine("IsAdmin");
+                            user.IsAdmin = ((bool)reader["IsAdmin"]);
                         }
+
+                            List<int> domicileIDs = new List<int>();
+                            var command2 = new SqlCommand("SELECT * FROM MapDomicileID WHERE UserID = @Id", connection);
+                            command2.Parameters.AddWithValue("@Id", userID);
+                            using (var reader2 = command2.ExecuteReader())
+                            {
+                                while (reader2.Read())
+                                {
+                                    domicileIDs.Add((int)reader2["DomicileID"]);
+                                }
+                            }
+                            user.DomicileID = domicileIDs;
                         return user;
                     }
                 }
