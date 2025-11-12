@@ -62,6 +62,12 @@ else if (Model.Edit == true)
                 {
                     <text>@i  </text>
                 }
+                All Users:
+                @foreach (var i in Model.Users)
+                {
+                    <text>@i.UserID  </text>
+                }
+                New User:<input type="text" name="TempUserID" asp-for="TempUserID" Value="@Model.SpecificDomicile.UserIDs[0]" />
             </p>
 
             <p>

@@ -31,6 +31,8 @@ namespace VaskEnTidWeb.Pages
         public string TempCountry { get; set; }
         [BindProperty]
         public List<User> Users { get; set; }
+        [BindProperty]
+        public int TempUserID { get; set; }
 
         DomicileService _domicileService;
         UserService _userService;
@@ -56,7 +58,7 @@ namespace VaskEnTidWeb.Pages
             Debug.WriteLine("Temp Domicile ID: " + TempID);
             Edit = true;
             SpecificDomicile = _domicileService.GetByID(TempID);
-            //Users=_userService.GetAll()
+            Users = _userService.GetAll();
         }
         public IActionResult OnPostSave()
         {
@@ -66,6 +68,7 @@ namespace VaskEnTidWeb.Pages
             //SpecificDomicile.Region=TempRegion;
             //SpecificDomicile.Door=TempDoor;
             //SpecificDomicile.Country=TempCountry;
+            _domicileService.AddUserIDbyDomID(TempUserID, TempID);
             _domicileService.Update(SpecificDomicile.DomicileID, TempRoadName, TempDoor,TempCity,TempRegion, TempCountry);
             Edit = false;
             return RedirectToPage("/Domicile", new { DomicileID = TempID });

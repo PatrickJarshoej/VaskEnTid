@@ -25,6 +25,8 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
+                    Debug.WriteLine("UserID is");
+                    Debug.WriteLine(userID);
                     var command = new SqlCommand("INSERT INTO MapDomicileID(DomicileID, UserID) VALUES (@DomicileID @UserID)", connection);
                     command.Parameters.AddWithValue("@DomicileID", domicileID);
                     command.Parameters.AddWithValue("@UserID", userID);
