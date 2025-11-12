@@ -71,7 +71,7 @@ namespace VaskEnTidWeb.Pages
             //SpecificDomicile.Door=TempDoor;
             //SpecificDomicile.Country=TempCountry;
             _domicileService.AddUserIDbyDomID(TempUserID, TempID);
-            _domicileService.RemoveUserByID(DeleteTempUserID);
+            _domicileService.RemoveUserByID(DeleteTempUserID,TempID);
             _domicileService.Update(SpecificDomicile.DomicileID, TempRoadName, TempDoor,TempCity,TempRegion, TempCountry);
             Edit = false;
             return RedirectToPage("/Domicile", new { DomicileID = TempID });
