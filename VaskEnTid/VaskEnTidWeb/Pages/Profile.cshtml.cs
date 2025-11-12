@@ -1,19 +1,46 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using VaskEnTidLib.Service;
+using VaskEnTidLib.Service;
+using VaskEnTidLib.Model;
+using System.Diagnostics;
 
 namespace VaskEnTidWeb.Pages
 {
-    public class PrivacyModel : PageModel
+    public class ProfileModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        public UserService _userService;
+        public BookingService _bookingService;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        [BindProperty]
+        public User user { get; set; } = new();
+        [BindProperty]
+        public List<Booking> bookings { get; set; } = new();
+
+        private readonly ILogger<ProfileModel> _logger;
+
+
+
+        public ProfileModel(ILogger<ProfileModel> logger, UserService bs, BookingService ebs)
         {
             _logger = logger;
+            _userService = bs;
+            _bookingService = ebs;
         }
 
-        public void OnGet()
+        public void OnGet(User loggedInUser)
         {
+            user = loggedInUser;
+            if (user.UserID == 0)
+            {
+                RedirectToPage("/Log-in");
+            }
+            int i = 0;
+            foreach (int domicileID in user.DomicileID)
+            {
+                bookings[i] = _bookingService.GetByDomicileID(user.DomicileID[i]);
+                i++;
+            }
         }
     }
 

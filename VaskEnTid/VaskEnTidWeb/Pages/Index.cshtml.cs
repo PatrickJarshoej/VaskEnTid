@@ -15,8 +15,8 @@ namespace VaskEnTidWeb.Pages
         [BindProperty]
         public string Pass { get; set; }
         [BindProperty]
-        public bool IsLoggedIn { get; set; }
-        
+        public bool IsLoggedIn { get; set; } = false;
+
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger, UserService bs)
@@ -34,19 +34,22 @@ namespace VaskEnTidWeb.Pages
         {
             Debug.WriteLine("Du kører den forkerte on post");
         }
-        public void OnPostLogIn()
+        public IActionResult OnPostLogIn()
         {
             User user = _userService.CheckPassword(Userid, Pass);
             if (user.UserID == 0)
             {
                 Debug.WriteLine("Error in Username or password");
                 IsLoggedIn = false;
+                Debug.WriteLine($"{user.FirstName} is logged in? {IsLoggedIn}");
+                return RedirectToPage("/Index");
             }
             else
             {
                 IsLoggedIn = true;
+                Debug.WriteLine($"{user.FirstName} is logged in? {IsLoggedIn}");
+                return RedirectToPage("/Profile", user);
             }
-            Console.WriteLine($"{user.FirstName} is logged in? {IsLoggedIn}");
         }
     }
 }

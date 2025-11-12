@@ -1,8 +1,33 @@
 ﻿@page
-@model PrivacyModel
+@model ProfileModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+	ViewData["Title"] = "Profile";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="text-lg-start">
+	<h1> Velkommen @Model.user.FirstName </h1>
+</div>
+<div>
+	<h3>Dine bookninger</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Date and Time</th>
+				<th>Machine</th>
+				<th>Remove booking?</th>
+			</tr>
+		</thead>
+		@foreach (VaskEnTidLib.Model.Booking booking in Model.bookings)
+		{
+			int a = 0;
+			<tbody>
+				<tr>
+					<td>@Model.bookings[a].DateAndTime</td>
+					<td>@Model.bookings[a].MachineIDs</td>
+					<td>remove button</td>
+				</tr>
+			</tbody>
+			a++;
+		}
+	</table>
+</div>
 
-<p>Use this page to detail your site's privacy policy.</p>
