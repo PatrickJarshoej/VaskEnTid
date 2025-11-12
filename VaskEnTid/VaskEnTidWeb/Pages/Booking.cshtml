@@ -2,6 +2,7 @@
 @model VaskEnTidWeb.Pages.BookingModel
 @{
 }
+<link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
 
 @if (Model.Edit == false)
 {
@@ -35,6 +36,10 @@
                 <input type="hidden" name="Edit" asp-for="Edit" value="true" />
                 <input type="submit" value="Edit" />
             </form>
+            <form method="post" asp-page-handler="Delete">
+                <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificBooking.BookingID" />
+                <input type="submit" value="Delete" />
+            </form>
         </div>
     </div>
 }
@@ -57,7 +62,7 @@ else if (Model.Edit == true)
                 }
             </p>
             <p>
-                Booking Tidspunkt:@Model.SpecificBooking.DateAndTime <input type="text" name="TempDateAndTime" asp-for="TempDateAndTime" placeholder="@Model.SpecificBooking.DateAndTime" />
+                Booking Tidspunkt: <input type="text" name="TempDateAndTime" asp-for="TempDateAndTime" value="@Model.SpecificBooking.DateAndTime" />
             </p>
             <p>
                 Duration: @Model.SpecificBooking.Duration
@@ -70,6 +75,11 @@ else if (Model.Edit == true)
             </p>
             <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificBooking.BookingID" />
             <input type="submit" value="Save Blog" />
+        </form>
+        <form method="post" asp-page-handler="Cancel">
+            <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificBooking.BookingID" />
+            <input type="hidden" name="Edit" asp-for="Edit" value="false" />
+            <input type="submit" value="Cancel" />
         </form>
     </div>
     

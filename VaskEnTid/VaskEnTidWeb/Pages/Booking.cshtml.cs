@@ -35,15 +35,21 @@ namespace VaskEnTidWeb.Pages
         {
 
         }
+        public void OnPostCancel()
+        {
+            SpecificBooking = _bookingService.GetByID(TempID);
+        }
         
         public void OnPostEdit()
         {
             Edit = true;
             SpecificBooking = _bookingService.GetByID(TempID);
         }
-        public void OnPostDelete() 
+        public IActionResult OnPostDelete() 
         {
-
+            Console.WriteLine($"You pressed Delete {TempID}");
+            _bookingService.DeleteByID(TempID);
+            return RedirectToPage("/Bookings");
         }
         public void OnPostSave()
         {

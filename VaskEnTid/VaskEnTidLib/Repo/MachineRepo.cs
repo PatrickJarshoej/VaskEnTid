@@ -141,7 +141,7 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("SELECT * FROM Machine WHERE MachineID=@Id", connection);
+                    var command = new SqlCommand("SELECT * FROM Machines WHERE MachineID=@Id", connection);
                     command.Parameters.AddWithValue("@Id", id);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
