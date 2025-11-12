@@ -32,14 +32,14 @@ namespace VaskEnTidWeb.Pages
 
         public void OnPost()
         {
-            Console.WriteLine("Du kører den forkerte on post");
+            Debug.WriteLine("Du kører den forkerte on post");
         }
         public void OnPostLogIn()
         {
             User user = _userService.CheckPassword(Userid, Pass);
             if (user.UserID == 0)
             {
-                Console.WriteLine("Error in Username or password");
+                Debug.WriteLine("Error in Username or password");
                 IsLoggedIn = false;
             }
             else
