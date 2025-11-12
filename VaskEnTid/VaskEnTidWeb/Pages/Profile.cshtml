@@ -4,7 +4,7 @@
 	ViewData["Title"] = "Profile";
 }
 <div class="text-lg-start">
-	<h1> Velkommen @Model.user.FirstName </h1>
+	<h1> Velkommen @Model.UserMe.FirstName </h1>
 </div>
 <div>
 	<h3>Dine bookninger</h3>
@@ -16,18 +16,13 @@
 				<th>Remove booking?</th>
 			</tr>
 		</thead>
-		@foreach (VaskEnTidLib.Model.Booking booking in Model.bookings)
-		{
-			int a = 0;
 			<tbody>
 				<tr>
-					<td>@Model.bookings[a].DateAndTime</td>
-					<td>@Model.bookings[a].MachineIDs</td>
+					<td>@Model.Bookings.DateAndTime</td>
+					<td>@Model.Bookings.MachineIDs</td>
 					<td>remove button</td>
 				</tr>
 			</tbody>
-			a++;
-		}
 	</table>
 </div>
 

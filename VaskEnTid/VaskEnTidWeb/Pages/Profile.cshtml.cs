@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using VaskEnTidLib.Service;
-using VaskEnTidLib.Service;
+using Microsoft.VisualBasic;
 using VaskEnTidLib.Model;
-using System.Diagnostics;
+using VaskEnTidLib.Service;
+using VaskEnTidLib.Service;
 
 namespace VaskEnTidWeb.Pages
 {
@@ -13,9 +14,9 @@ namespace VaskEnTidWeb.Pages
         public BookingService _bookingService;
 
         [BindProperty]
-        public User user { get; set; } = new();
+        public User UserMe { get; set; } = new();
         [BindProperty]
-        public List<Booking> bookings { get; set; } = new();
+        public Booking Bookings { get; set; } = new();
 
         private readonly ILogger<ProfileModel> _logger;
 
@@ -30,15 +31,15 @@ namespace VaskEnTidWeb.Pages
 
         public void OnGet(User loggedInUser)
         {
-            user = loggedInUser;
-            if (user.UserID == 0)
+            UserMe = loggedInUser;
+            if (UserMe.UserID == 0)
             {
                 RedirectToPage("/Log-in");
             }
             int i = 0;
-            foreach (int domicileID in user.DomicileID)
+            foreach (int domicileID in UserMe.DomicileID)
             {
-                bookings[i] = _bookingService.GetByDomicileID(user.DomicileID[i]);
+                Bookings = _bookingService.GetByDomicileID(UserMe.DomicileID[0]);
                 i++;
             }
         }
