@@ -11,9 +11,13 @@ namespace VaskEnTidWeb.Pages
         [BindProperty]
         public int BookingID { get; set; }
         [BindProperty]
-        public bool Edit { get; set; }
+        public bool Edit { get; set; } = false;
         [BindProperty]
         public Booking SpecificBooking { get; set; }
+        [BindProperty]
+        public DateTime TempDateAndTime { get; set; }
+        [BindProperty]
+        public int TempID { get; set; }
 
         BookingService _bookingService;
 
@@ -25,15 +29,30 @@ namespace VaskEnTidWeb.Pages
         public void OnGet(int bookingID)
         {
             SpecificBooking = _bookingService.GetByID(bookingID);
-
         }
+
         public void OnPost()
         {
 
         }
+        
         public void OnPostEdit()
         {
             Edit = true;
+            SpecificBooking = _bookingService.GetByID(TempID);
         }
+        public void OnPostDelete() 
+        {
+
+        }
+        public void OnPostSave()
+        {
+            SpecificBooking = _bookingService.GetByID(TempID);
+            SpecificBooking.DateAndTime = TempDateAndTime;
+            //Console.WriteLine(SpecificBooking);
+            _bookingService.Update(SpecificBooking);
+            Edit = false;
+        }
+        
     }
 }

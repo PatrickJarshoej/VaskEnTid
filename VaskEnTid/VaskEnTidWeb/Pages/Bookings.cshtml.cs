@@ -17,6 +17,7 @@ namespace VaskEnTidWeb.Pages
 
         [BindProperty]
         public int TempBookingID { get; set; }
+    
 
         public BookingsModel(BookingService bs, MachineService ms)
         {
