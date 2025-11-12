@@ -148,13 +148,15 @@ namespace VaskEnTidLib.Repo
                     {
                         if (reader.Read())
                         {
-                            
+                            booking = new Booking((DateTime)reader["DateAndTime"], (int)reader["DomicileID"], (TimeSpan)reader["Duration"], decimal.ToDouble((decimal)reader["TotalCost"]), (int)reader["BookingID"]);
+                            booking.MachineIDs = GetMachineIDs((int)reader["BookingID"], connection);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-
+                    Debug.WriteLine("Error in GetByDomicileID in BookingRepo");
+                    Debug.WriteLine("Error: " + ex);
                 }
                 finally
                 {
