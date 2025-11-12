@@ -19,26 +19,46 @@ namespace VaskEnTidLib.Repo
         {
             _connectionString = "Data Source=mssql15.unoeuro.com;User ID=arvedlund_com;Password=BdpAFfg62xzDnR3wkcht;Encrypt=False; Database=arvedlund_com_db_vask_en_tid; Command Timeout=30;MultipleActiveResultSets=true;";
         }
-        //public List<Booking> bookings;
+        
+
+        public void AddBookingToMap(int id, int bookingID, SqlConnection connection)
+        {
+            try
+            {
+                var command2 = new SqlCommand("INSERT INTO MapMachineID (MachineID, BookingID) VALUES (@MachineID, @BookingID);", connection);
+                command2.Parameters.AddWithValue("@MachineID", id);
+                command2.Parameters.AddWithValue("@BookingID", bookingID);
+                command2.ExecuteNonQuery();
+                
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error in AddBookingToMap in BookingRepo");
+                Debug.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                
+            }
+        }
         public void Add(Booking booking)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 try
                 {
-                    var command = new SqlCommand("INSERT INTO Bookings (DateAndTime, DomicileID, Duration, TotalCost) VALUES (@DateAndTime, @DomicileID, @Duration, @TotalCost);", connection);
+                    var command = new SqlCommand("INSERT INTO Bookings (DateAndTime, DomicileID, Duration, TotalCost) OUTPUT Inserted.BookingID VALUES (@DateAndTime, @DomicileID, @Duration, @TotalCost);", connection);
                     command.Parameters.AddWithValue("@DateAndTime", booking.DateAndTime);
                     command.Parameters.AddWithValue("@DomicileID", booking.DomicileID);
                     command.Parameters.AddWithValue("@Duration", booking.Duration);
                     command.Parameters.AddWithValue("@TotalCost", booking.TotalCost);   
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    int bookingID = (int)command.ExecuteScalar();
+
+                    
                     foreach (var id in booking.MachineIDs)
                     {
-                        var command2 = new SqlCommand("INSERT INTO MapMachineID (MachineID, BookingID) VALUES (@MachineID, @BookingID);", connection);
-                        command2.Parameters.AddWithValue("@MachineID", id);
-                        command2.Parameters.AddWithValue("@BookingID", booking.BookingID);
-                        command2.ExecuteNonQuery();
+                        AddBookingToMap(id, bookingID, connection);
                     }
                 }
                 catch (Exception ex)
