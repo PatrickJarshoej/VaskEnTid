@@ -30,7 +30,7 @@
             <!--This button runs the OnPostShow method and defines a temporary booking id we can send over -->
             <form method="post" asp-page-handler="Show">
                 <!--to the next page -->
-                <input type="hidden" name="DomicileID" asp-for="TempDomicileID" value="@domicile.DomicileID" />
+                <input type="hidden" name="TempDomicileID" asp-for="TempDomicileID" value="@domicile.DomicileID" />
                 <input type="submit" value="Open Domicile" />
             </form>
         </div>
