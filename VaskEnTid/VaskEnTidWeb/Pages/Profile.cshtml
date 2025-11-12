@@ -16,13 +16,42 @@
 				<th>Remove booking?</th>
 			</tr>
 		</thead>
-			<tbody>
-				<tr>
-					<td>@Model.Bookings.DateAndTime</td>
-					<td>@Model.Bookings.MachineIDs[0]</td>
-					<td>remove button</td>
-				</tr>
-			</tbody>
+		<tbody>
+			<tr>
+				<td>@Model.Bookings.DateAndTime</td>
+				<td>@Model.Bookings.MachineIDs[0]</td>
+				<td><input type="submit" value="Delete" /></td>
+			</tr>
+		</tbody>
 	</table>
 </div>
+@if (Model.UserMe.IsAdmin == true)
+{
+	<div>
+		<h3>Alle Brugere</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>UserID</th>
+					<th>Fornavn</th>
+					<th>Efternavn</th>
+					<th>Bolig</th>
+					<th>Fjern</th>
+				</tr>
+			</thead>
+			@foreach (VaskEnTidLib.Model.User user in @Model.Users)
+			{
+				<tbody>
+					<tr>
+						<td>@Model.Bookings.DateAndTime</td>
+						<td>@Model.UserMe.FirstName</td>
+						<td>@Model.UserMe.LastName</td>
+						<td>@Model.UserMe.DomicileID[0]</td>
+						<td><input type="submit" value="Delete" /></td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</div>
+}
 

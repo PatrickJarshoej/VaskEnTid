@@ -83,27 +83,48 @@ namespace VaskEnTidLib.Repo
             using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand("SELECT UserID, FirstName, LastName, Email, Phone, Password, IsAdmin FROM Users", connection);
+                var command2 = new SqlCommand("SELECT DomicileID FROM MapDomicileID where UserID = @ID", connection);
                 connection.Open();
-                using (var reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+
+                    using (var reader = command.ExecuteReader())
                     {
-                        var user = new User(
+                        while (reader.Read())
+                        {
+                            var user = new User(
 
-                            (int)reader["UserID"],
-                            (string)reader["FirstName"],
-                            (string)reader["LastName"],
-                            (string)reader["Email"],
-                            (string)reader["Phone"],
-                            (string)reader["Password"],
-                            (bool)reader["IsAdmin"]
+                                (int)reader["UserID"],
+                                (string)reader["FirstName"],
+                                (string)reader["LastName"],
+                                (string)reader["Email"],
+                                (string)reader["Phone"],
+                                (string)reader["Password"],
+                                (bool)reader["IsAdmin"]
 
-                            );
-                        user.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
-                        users.Add(user);
+                                );
+                            command2.Parameters.AddWithValue("@Id", (int)reader["UserID"]);
+                            using (var reader2 = command2.ExecuteReader())
+                            {
+                                if (reader2.Read())
+                                {
+                                    user.DomicileID = GetDomicileIDs((int)reader2["DomicileID"], connection);
+                                }
+                            }
+
+                            users.Add(user);
+                        }
                     }
                 }
-                connection.Close();
+                catch(Exception ex)
+                {
+                    Debug.WriteLine("Error in User GetAll method");
+                    Debug.WriteLine($"Error: {ex}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
             return users;
         }
@@ -304,17 +325,17 @@ namespace VaskEnTidLib.Repo
                             user.IsAdmin = ((bool)reader["IsAdmin"]);
                         }
 
-                            List<int> domicileIDs = new List<int>();
-                            var command2 = new SqlCommand("SELECT * FROM MapDomicileID WHERE UserID = @Id", connection);
-                            command2.Parameters.AddWithValue("@Id", userID);
-                            using (var reader2 = command2.ExecuteReader())
+                        List<int> domicileIDs = new List<int>();
+                        var command2 = new SqlCommand("SELECT * FROM MapDomicileID WHERE UserID = @Id", connection);
+                        command2.Parameters.AddWithValue("@Id", userID);
+                        using (var reader2 = command2.ExecuteReader())
+                        {
+                            while (reader2.Read())
                             {
-                                while (reader2.Read())
-                                {
-                                    domicileIDs.Add((int)reader2["DomicileID"]);
-                                }
+                                domicileIDs.Add((int)reader2["DomicileID"]);
                             }
-                            user.DomicileID = domicileIDs;
+                        }
+                        user.DomicileID = domicileIDs;
                         return user;
                     }
                 }
