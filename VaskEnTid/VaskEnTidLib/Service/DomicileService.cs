@@ -29,6 +29,10 @@ namespace VaskEnTidLib.Service
         {  
             _domicileRepo.AddUserIDByDomID(userID, domID);
         }
+        public void RemoveUserByID(int userID)
+        {
+            _domicileRepo.RemoveUserByID(userID);
+        }
         public List<Domicile> GetAll()
         {
             return _domicileRepo.GetAll();

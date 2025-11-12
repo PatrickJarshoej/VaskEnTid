@@ -33,6 +33,8 @@ namespace VaskEnTidWeb.Pages
         public List<User> Users { get; set; }
         [BindProperty]
         public int TempUserID { get; set; }
+        [BindProperty]
+        public int DeleteTempUserID { get; set; }
 
         DomicileService _domicileService;
         UserService _userService;
@@ -69,6 +71,7 @@ namespace VaskEnTidWeb.Pages
             //SpecificDomicile.Door=TempDoor;
             //SpecificDomicile.Country=TempCountry;
             _domicileService.AddUserIDbyDomID(TempUserID, TempID);
+            _domicileService.RemoveUserByID(DeleteTempUserID);
             _domicileService.Update(SpecificDomicile.DomicileID, TempRoadName, TempDoor,TempCity,TempRegion, TempCountry);
             Edit = false;
             return RedirectToPage("/Domicile", new { DomicileID = TempID });
