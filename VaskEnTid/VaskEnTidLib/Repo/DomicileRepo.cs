@@ -25,7 +25,9 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("INSERT INTO MapDomicileID(DomicileID, UserID) VALUES (@DomicileID @UserID)", connection);
+                    Debug.WriteLine("UserID is");
+                    Debug.WriteLine(userID);
+                    var command = new SqlCommand("INSERT INTO MapDomicileID(DomicileID, UserID) VALUES (@DomicileID, @UserID)", connection);
                     command.Parameters.AddWithValue("@DomicileID", domicileID);
                     command.Parameters.AddWithValue("@UserID", userID);
                     connection.Open();
@@ -278,6 +280,19 @@ namespace VaskEnTidLib.Repo
         }
         public void DeleteByID(int id)
         {
+            Domicile theDomicile = GetByID(id);
+            try 
+            {
+                foreach (int i in theDomicile.UserIDs)
+                {
+                    DeleteByID(i);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: in DeleteBy in DomicileRepo");
+                Debug.WriteLine($"Error: {ex.Message}");
+            }
             using (var connection = new SqlConnection(_connectionString))
             {
                 try

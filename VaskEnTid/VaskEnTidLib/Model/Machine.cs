@@ -10,50 +10,50 @@ namespace VaskEnTidLib.Model
     public enum Status { Available, Unavailable, UnderService }
     public class Machine
     {
-        public TimeOnly MinimumTime { get; private set; }
+        public TimeSpan MinimumTime { get; private set; }
         public int TypeNumber { get; private set; }
         public Type Type { get; private set; }
         public Status Status { get; private set; }
         public double Cost { get; private set; }
         public int MachineID { get; private set; }
 
-        public TimeOnly WashTime = new(0, 45);
-        public TimeOnly DryerTime = new(0, 20);
-        public TimeOnly RollingTime = new(0, 30);
+        public TimeSpan WashTime = new(0, 45, 0);
+        public TimeSpan DryerTime = new(0, 20, 0);
+        public TimeSpan RollingTime = new(0, 30, 0);
         public Machine()
         {
 
         }
         public Machine(int typeNumber, Type type, Status status, double cost)
         {
-            if (Type == Type.Washer)
+            if (type == Type.Washer)
             {
                 MinimumTime = WashTime;
             }
-            else if (Type == Type.Dryer)
+            else if (type == Type.Dryer)
             { 
                 MinimumTime = DryerTime; 
             }
-            else if (Type == Type.Rollingmachine)
+            else if (type == Type.Rollingmachine)
             { 
                 MinimumTime = RollingTime;
             }
-            TypeNumber = typeNumber;
             Type = type;
+            TypeNumber = typeNumber;
             Status = status;
             Cost = cost;
         }
         public Machine(int typeNumber, Type type, Status status, double cost, int machineID)
         {
-            if (Type == Type.Washer)
+            if (type == Type.Washer)
             {
                 MinimumTime = WashTime;
             }
-            else if (Type == Type.Dryer)
+            else if (type == Type.Dryer)
             {
                 MinimumTime = DryerTime;
             }
-            else if (Type == Type.Rollingmachine)
+            else if (type == Type.Rollingmachine)
             {
                 MinimumTime = RollingTime;
             }

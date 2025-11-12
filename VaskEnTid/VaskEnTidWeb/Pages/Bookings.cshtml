@@ -6,6 +6,23 @@
 <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
 <h1>@ViewData["Title"]</h1>
 
+<div class="card">
+    <form method="post" asp-page-handler="Create">
+        <input type="text" name="DateAndTime" asp-for="DateAndTime" value="@DateTime.Now" required />
+        <input type="int" name="DomicileID" asp-for="DomicileID" required />
+        <label for="Machine Selection"></label>
+        <select id="MachineIDs" name="MachineIDs" required>
+            <option value="1">Washer 1</option> 
+            <option value="2">Washer 2</option> 
+            <option value="3">Washer 3</option>
+            <option value="4">Dryer 1</option>
+            <option value="5">Dryer 2</option>
+            <option value="6">Roller 1</option>
+        </select>
+        @* <input type="drop" name="MachineIDs" asp-for="MachineIDs" required /> *@
+        <input type="submit" value="Create"/>
+    </form>
+</div>
 
 @foreach (VaskEnTidLib.Model.Booking booking in Model.Bookings)
 {
@@ -44,15 +61,3 @@
     </div>
 }
 
-@foreach (VaskEnTidLib.Model.Machine machine in Model.Machines)
-{
-    <p>
-        @machine.MachineID
-    </p>
-    <p>
-        @machine.Type
-    </p>
-    <p>
-        @machine.Status
-    </p>
-}

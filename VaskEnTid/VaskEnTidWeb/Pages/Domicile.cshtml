@@ -7,9 +7,6 @@
 {
     <div class="card">
         <h1>
-            Booking Id: @Model.SpecificDomicile.DomicileID
-        </h1>
-        <h1>
             Domicile Id: @Model.SpecificDomicile.DomicileID
         </h1>
 
@@ -62,6 +59,13 @@ else if (Model.Edit == true)
                 {
                     <text>@i  </text>
                 }
+                All Users:
+                @foreach (var i in Model.Users)
+                {
+                    <text>@i.UserID  </text>
+                }
+                New User:<input type="text" name="TempUserID" asp-for="TempUserID" />
+                Delete a user?:<input type="text" name="DeleteTempUserID" asp-for="DeleteTempUserID" />
             </p>
 
             <p>

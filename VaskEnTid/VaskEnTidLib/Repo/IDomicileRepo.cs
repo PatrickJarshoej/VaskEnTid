@@ -16,7 +16,7 @@ namespace VaskEnTidLib.Repo
         List<Domicile> GetAll();
 
         Domicile GetByID(int id);
-
+        void RemoveUserByID(int userID);
         Domicile GetByUserID(int userID);
 
         void Update(Domicile theDomicile);
