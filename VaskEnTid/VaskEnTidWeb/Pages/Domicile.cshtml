@@ -1,0 +1,45 @@
+﻿@page
+@model VaskEnTidWeb.Pages.DomicileModel
+@{
+}
+
+@if (Model.Edit == false)
+{
+    <div class="card">
+        <h1>
+            Booking Id: @Model.SpecificDomicile.DomicileID
+        </h1>
+        <h1>
+            Domicile Id: @Model.SpecificDomicile.DomicileID
+        </h1>
+
+        <p>
+            Adress: @Model.SpecificDomicile.Roadname @Model.SpecificDomicile.Door, @Model.SpecificDomicile.Floor. etage, @Model.SpecificDomicile.Postalcode @Model.SpecificDomicile.City, @Model.SpecificDomicile.Region, @Model.SpecificDomicile.Country
+        </p>
+
+        <p>
+            User Ids:
+            @foreach (var i in Model.SpecificDomicile.UserIDs)
+            {
+                <text>@i  </text>
+            }
+        </p>
+        <p>
+            PriceTally: @Model.SpecificDomicile.PriceTally
+        </p>
+        @* <form method="post" asp-page-handler="Delete">
+            <input type="Hidden" name="TempTitle" asp-for="TempTitle" value="@Model.SpecificBlog.Title" />
+            <input type="submit" value="Delete Blog" />
+        </form> *@
+        <div>
+            <form method="post" asp-page-handler="Edit">
+                <input type="hidden" name="Edit" asp-for="Edit" value="true" />
+                <input type="submit" value="Edit" />
+            </form>
+        </div>
+    </div>
+}
+else if (Model.Edit == true)
+{
+    
+}

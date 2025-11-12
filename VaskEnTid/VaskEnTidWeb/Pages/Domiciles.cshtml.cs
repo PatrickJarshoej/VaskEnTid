@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics;
 using VaskEnTidLib.Model;
 using VaskEnTidLib.Service;
 
 namespace VaskEnTidWeb.Pages
 {
-    public class DomicileModel : PageModel
+    public class DomicilesModel : PageModel
     {
 
         DomicileService _domicileService;
@@ -13,7 +14,7 @@ namespace VaskEnTidWeb.Pages
         [BindProperty]
         public int TempDomicileID { get; set; }
 
-        public DomicileModel(DomicileService ds)
+        public DomicilesModel(DomicileService ds)
         {
             _domicileService = ds;
             Domiciles = _domicileService.GetAll();
@@ -30,7 +31,8 @@ namespace VaskEnTidWeb.Pages
         public void OnPost() { }
         public IActionResult OnPostShow()
         {
-            return RedirectToPage("/Blog", new { DomicileID = TempDomicileID });
+            Debug.WriteLine("Temp Domicile ID: " + TempDomicileID);
+            return RedirectToPage("/Domicile", new { DomicileID = TempDomicileID });
         }
 
     }
