@@ -11,6 +11,7 @@ namespace VaskEnTidWeb.Pages
     {
         public UserService _userService;
         public BookingService _bookingService;
+        public DomicileService _domicileService;
 
         [BindProperty]
         public User UserMe { get; set; } = new();
@@ -22,6 +23,8 @@ namespace VaskEnTidWeb.Pages
         public string CreateFirstName { get; set; } = "John";
         [BindProperty]
         public string CreateLastName { get; set; } = "Doe";
+        [BindProperty]
+        public List<int> CreateDomicileID { get; set; } = new List<int>(0);
         [BindProperty]
         public string CreatePhone { get; set; } = "Not a number";
         [BindProperty]
@@ -35,11 +38,12 @@ namespace VaskEnTidWeb.Pages
 
 
 
-        public ProfileModel(ILogger<ProfileModel> logger, UserService bs, BookingService ebs)
+        public ProfileModel(ILogger<ProfileModel> logger, UserService bs, BookingService ebs, DomicileService dbs)
         {
             _logger = logger;
             _userService = bs;
             _bookingService = ebs;
+            _domicileService = dbs;
         }
 
         public void OnGet(User loggedInUser)
@@ -57,8 +61,12 @@ namespace VaskEnTidWeb.Pages
         }
         public IActionResult OnPostCreateUser()
         {
+            User tempUser = new User(CreateFirstName, CreateLastName, CreateEmail, CreatePhone, CreatePassword, CreateAdmin);
             _userService.CreateUser(CreateFirstName, CreateLastName, CreateEmail, CreatePhone, CreatePassword,CreateAdmin);
+            tempUser = _userService.GetIDFromCreation(tempUser);
+            _domicileService.AddUserIDbyDomID(tempUser.UserID, CreateDomicileID[0]);
             return RedirectToPage("/Profile", UserMe);
+
         }
     }
 

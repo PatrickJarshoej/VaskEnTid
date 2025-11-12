@@ -121,6 +121,40 @@ namespace VaskEnTidLib.Repo
             }
             return users;
         }
+        public User GetIDFromCreation(User user)
+        {
+            var users = new List<User>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand("SELECT UserID FROM Users WHERE FirstName = @FirstName and LastName = @LastName and Email = @Email and Phone = @Phone and Password = @Password and IsAdmin = @IsAdmin", connection);
+                command.Parameters.AddWithValue("@FirstName", user.FirstName);
+                command.Parameters.AddWithValue("@LastName", user.LastName);
+                command.Parameters.AddWithValue("@Email", user.Email);
+                command.Parameters.AddWithValue("@Phone", user.Phone);
+                command.Parameters.AddWithValue("@Password", user.Password);
+                command.Parameters.AddWithValue("@IsAdmin", user.IsAdmin);
+                connection.Open();
+                try
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            user.UserID = ((int)reader["UserID"]);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error: {ex}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                return user;
+            }
+        }
 
         /// <summary>
         /// Returns domicile ID's based on a UserID 

@@ -39,6 +39,11 @@ namespace VaskEnTidLib.Service
             User user = new(name, lastName, email, phone, password, isAdmin);
             _userRepo.Add(user);
         }
+        public User GetIDFromCreation(User user)
+        {
+            user = _userRepo.GetIDFromCreation(user);
+            return user;
+        }
         public User CheckPassword(int UserID, string Password)
         {
             User user = _userRepo.CheckPassword(UserID, Password);
