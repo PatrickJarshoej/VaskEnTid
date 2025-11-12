@@ -39,14 +39,15 @@
 					<th>Fjern</th>
 				</tr>
 			</thead>
-			@foreach (VaskEnTidLib.Model.User user in @Model.Users)
+@* 			@foreach (VaskEnTidLib.Model.User SpecificUser in @Model.Users) *@
+			@for (int i = 0; i < @Model.Users.Count; i++)
 			{
 				<tbody>
 					<tr>
-						<td>@Model.Bookings.DateAndTime</td>
-						<td>@Model.UserMe.FirstName</td>
-						<td>@Model.UserMe.LastName</td>
-						<td>@Model.UserMe.DomicileID[0]</td>
+						<td>@Model.Users[i].UserID</td>
+						<td>@Model.Users[i].FirstName</td>
+						<td>@Model.Users[i].LastName</td>
+						<td>@Model.Users[i].DomicileID[0]</td>
 						<td><input type="submit" value="Delete" /></td>
 					</tr>
 				</tbody>

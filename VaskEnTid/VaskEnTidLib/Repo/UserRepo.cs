@@ -83,7 +83,6 @@ namespace VaskEnTidLib.Repo
             using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand("SELECT UserID, FirstName, LastName, Email, Phone, Password, IsAdmin FROM Users", connection);
-                var command2 = new SqlCommand("SELECT DomicileID FROM MapDomicileID where UserID = @ID", connection);
                 connection.Open();
                 try
                 {
@@ -103,21 +102,13 @@ namespace VaskEnTidLib.Repo
                                 (bool)reader["IsAdmin"]
 
                                 );
-                            command2.Parameters.AddWithValue("@Id", (int)reader["UserID"]);
-                            using (var reader2 = command2.ExecuteReader())
-                            {
-                                if (reader2.Read())
-                                {
-                                    List<int> domID = new List<int>((int)reader2["DomicileID"]);
-                                    user.DomicileID = domID;
-                                }
-                            }
+                            user.DomicileID = GetDomicileIDs((int)reader["UserID"], connection);
 
                             users.Add(user);
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine("Error in User GetAll method");
                     Debug.WriteLine($"Error: {ex}");
@@ -141,7 +132,6 @@ namespace VaskEnTidLib.Repo
             List<int> domicileIDs = new List<int>();
             var command = new SqlCommand("SELECT DomicileID FROM MapDomicileID WHERE UserId = @Id", connection);
             command.Parameters.AddWithValue("@Id", userid);
-            connection.Open();
             try
             {
                 using (var reader = command.ExecuteReader())
@@ -159,7 +149,6 @@ namespace VaskEnTidLib.Repo
             }
             finally
             {
-                connection.Close();
             }
             return domicileIDs;
         }
