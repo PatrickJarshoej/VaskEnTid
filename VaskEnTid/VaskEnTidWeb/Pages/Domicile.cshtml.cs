@@ -76,5 +76,11 @@ namespace VaskEnTidWeb.Pages
             Edit = false;
             return RedirectToPage("/Domicile", new { DomicileID = TempID });
         }
+        public IActionResult OnPostDelete()
+        {
+            Console.WriteLine($"You pressed Delete {TempID}");
+            _domicileService.DeleteByID(TempID);
+            return RedirectToPage("/Domiciles");
+        }
     }
 }

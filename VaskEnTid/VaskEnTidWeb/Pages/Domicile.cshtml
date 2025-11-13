@@ -24,10 +24,10 @@
         <p>
             PriceTally: @Model.SpecificDomicile.PriceTally
         </p>
-        @* <form method="post" asp-page-handler="Delete">
-            <input type="Hidden" name="TempTitle" asp-for="TempTitle" value="@Model.SpecificBlog.Title" />
-            <input type="submit" value="Delete Blog" />
-        </form> *@
+        <form method="post" asp-page-handler="Delete">
+            <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificDomicile.DomicileID" />
+            <input type="submit" value="Delete" />
+        </form>
         <div>
             <form method="post" asp-page-handler="Edit">
                 <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificDomicile.DomicileID" />

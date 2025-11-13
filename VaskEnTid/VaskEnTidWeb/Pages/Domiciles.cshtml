@@ -5,7 +5,18 @@
 }
 <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
 <h1>@ViewData["Title"]</h1>
-
+<div class="card">
+    <form method="post" asp-page-handler="Create">
+        <input type="Text" name="RoadName" asp-for="RoadName" value="Kongens Boulevard" required />
+        <input type="Text" name="Door" asp-for="Door" value="1" required />
+        <input type="Text" name="Floor" asp-for="Floor" value="0" required />
+        <input type="int" name="PostalCode" asp-for="PostalCode" value="2000" required />
+        <input type="Text" name="City" asp-for="City" value="Frederiksberg" required />
+        <input type="Text" name="Region" asp-for="Region" value="Hovedstaden" required />
+        <input type="Text" name="Country" asp-for="Country" value="Denmark" required />
+        <input type="submit" value="Create" />
+    </form>
+</div>
 @foreach (VaskEnTidLib.Model.Domicile domicile in Model.Domiciles)
 {<div class="card">
         <h1>

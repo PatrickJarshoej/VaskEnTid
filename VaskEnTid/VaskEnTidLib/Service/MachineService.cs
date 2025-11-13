@@ -25,10 +25,18 @@ namespace VaskEnTidLib.Service
         {
             return _machineRepo.GetAll();
         }
-        public void Update(Machine machine)
+        public void Update(int machineID,Status theStatus, double theCost)
         {
-            throw new NotImplementedException();
-
+            Machine theMachine=GetByID(machineID);
+            Machine tempMachine = new Machine
+                (
+                theMachine.TypeNumber,
+                theMachine.Type,
+                theStatus,
+                theCost,
+                machineID
+                );
+            _machineRepo.Update(tempMachine);
         }
         public void DeleteByID(int machineID)
         {
@@ -37,7 +45,7 @@ namespace VaskEnTidLib.Service
         }
         public Machine GetByID(int machineID)
         {
-            throw new NotImplementedException();
+            return _machineRepo.GetByID(machineID);
         }
 
     }
