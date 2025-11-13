@@ -84,10 +84,14 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("DELETE FROM Bookings WHERE BookingID = @ID", connection);
+                    var command = new SqlCommand("DELETE FROM MapMachineID WHERE BookingID = @ID", connection);
                     command.Parameters.AddWithValue("@ID", id);
                     connection.Open();
                     command.ExecuteNonQuery();
+
+                    var command2 = new SqlCommand("DELETE FROM Bookings WHERE BookingID = @ID", connection);
+                    command2.Parameters.AddWithValue("@ID", id);
+                    command2.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
