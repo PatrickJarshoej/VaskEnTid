@@ -5,7 +5,17 @@
 }
 <link rel="stylesheet" href="~/css/booking.css" asp-append-version="true" />
 <h1>@ViewData["Title"]</h1>
-
+<div class="card">
+    <form method="post" asp-page-handler="Create">
+        <input type="Text" name="TempTypeNumber" asp-for="TempTypeNumber" value="" required />
+        <select id="TempType" name="TempType" required>
+            <option value="Washer">Washer</option>
+            <option value="Dryer">Dryer</option>
+            <option value="Rollingmachine">Rollingmachine</option>
+        </select>
+        <input type="submit" value="Create" />
+    </form>
+</div>
 
 @foreach (VaskEnTidLib.Model.Machine machine in Model.Machines)
 {

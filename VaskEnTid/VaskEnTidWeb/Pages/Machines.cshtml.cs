@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Reflection.PortableExecutable;
 using VaskEnTidLib.Model;
 using VaskEnTidLib.Service;
@@ -15,6 +17,10 @@ namespace VaskEnTidWeb.Pages
 
         [BindProperty]
         public int TempMachineID { get; set; }
+        [BindProperty]
+        public VaskEnTidLib.Model.Type TempType { get; set; }
+        [BindProperty]
+        public int TempTypeNumber { get; set; }
 
         public MachinesModel(MachineService ms)
         {
@@ -26,9 +32,10 @@ namespace VaskEnTidWeb.Pages
         {
         }
 
-        public void OnPostCreate()
+        public IActionResult OnPostCreate()
         {
-
+            _machineService.Create(TempType, TempTypeNumber);
+            return RedirectToPage("/Machines");
         }
         public void OnPost() { }
         public IActionResult OnPostShow()
