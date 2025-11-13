@@ -9,7 +9,6 @@ namespace VaskEnTidWeb.Pages
     public class MachinesModel : PageModel
     {
 
-        BookingService _bookingService;
         MachineService _machineService;
         public List<Booking> Bookings {  get; set; }
         public List<VaskEnTidLib.Model.Machine> Machines {  get; set; }
