@@ -6,10 +6,9 @@ using VaskEnTidLib.Service;
 
 namespace VaskEnTidWeb.Pages
 {
-    public class MachineModel : PageModel
+    public class MachinesModel : PageModel
     {
 
-        BookingService _bookingService;
         MachineService _machineService;
         public List<Booking> Bookings {  get; set; }
         public List<VaskEnTidLib.Model.Machine> Machines {  get; set; }
@@ -17,7 +16,7 @@ namespace VaskEnTidWeb.Pages
         [BindProperty]
         public int TempMachineID { get; set; }
 
-        public MachineModel(MachineService ms)
+        public MachinesModel(MachineService ms)
         {
             _machineService = ms;
             Machines = _machineService.GetAll();
@@ -34,7 +33,7 @@ namespace VaskEnTidWeb.Pages
         public void OnPost() { }
         public IActionResult OnPostShow()
         {
-            return RedirectToPage("/Blog", new { MachineID = TempMachineID });
+            return RedirectToPage("/Machine", new { MachineID = TempMachineID });
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿@page
-@model VaskEnTidWeb.Pages.MachineModel
+@model VaskEnTidWeb.Pages.MachinesModel
 @{
     ViewData["Title"] = "Machines n shit";
 }
@@ -26,7 +26,7 @@
             <!--This button runs the OnPostShow method and defines a temporary booking id we can send over -->
             <form method="post" asp-page-handler="Show">
                 <!--to the next page -->
-                <input type="hidden" name="MachineID" asp-for="TempMachineID" value="@machine.MachineID" />
+                <input type="hidden" name="TempMachineID" asp-for="TempMachineID" value="@machine.MachineID" />
                 <input type="submit" value="Open Machine" />
             </form>
         </div>

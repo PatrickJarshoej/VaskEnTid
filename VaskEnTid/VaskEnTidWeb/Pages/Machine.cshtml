@@ -1,0 +1,62 @@
+﻿@page
+@model VaskEnTidWeb.Pages.MachineModel
+@{
+}
+
+@if (Model.Edit == false)
+{
+    <div class="card">
+        <p>
+            Machine ID: @Model.SpecificMachine.MachineID
+        </p>
+        <p>
+            Machine Type: @Model.SpecificMachine.TypeNumber
+        </p>
+        <p>
+            Machine Type: @Model.SpecificMachine.Type
+        </p>
+        <p>
+            Machine Cost: @Model.SpecificMachine.Cost
+        </p>
+        <p>
+            Machine Status: @Model.SpecificMachine.Status
+        </p>
+        <form method="post" asp-page-handler="Delete">
+            <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificMachine.MachineID" />
+            <input type="submit" value="Delete" />
+        </form>
+        <div>
+            <form method="post" asp-page-handler="Edit">
+                <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificMachine.MachineID" />
+                <input type="hidden" name="Edit" asp-for="Edit" value="true" />
+                <input type="submit" value="Edit" />
+            </form>
+        </div>
+    </div>
+}
+else if (Model.Edit == true)
+{
+    <div class="card">
+        <form method="post" asp-page-handler="Save">
+            <p>
+                Machine ID: @Model.SpecificMachine.MachineID
+            </p>
+            <p>
+                Machine Type: @Model.SpecificMachine.TypeNumber
+            </p>
+            <p>
+                Machine Type: @Model.SpecificMachine.Type
+            </p>
+            <p>
+                Machine Cost: @Model.SpecificMachine.Cost New Cost:<input type="text" name="TempCost" asp-for="TempCost" Value="@Model.SpecificMachine.Cost" />
+            </p>
+            <p>
+                Machine Status: @Model.SpecificMachine.Status
+            </p>
+
+            <input type="hidden" name="TempID" asp-for="TempID" value="@Model.SpecificMachine.MachineID" />
+            <input type="submit" value="Save Changes" />
+        </form>
+    </div>
+
+}
