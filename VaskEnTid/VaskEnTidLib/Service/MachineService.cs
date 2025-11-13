@@ -16,9 +16,13 @@ namespace VaskEnTidLib.Service
         {
             _machineRepo = machineRepo;
         }
-        public void Create(Enum machineType, string MachineTypeNumber)
+        public void Create(Model.Type machineType, int machineTypeNumber)
         {
-            throw new NotImplementedException();
+            Machine theMachine = new Machine
+                (
+                machineTypeNumber,
+                machineType
+                );
 
         }
         public List<Machine> GetAll()
