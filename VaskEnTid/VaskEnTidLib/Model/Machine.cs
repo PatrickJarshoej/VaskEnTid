@@ -24,7 +24,7 @@ namespace VaskEnTidLib.Model
         {
 
         }
-        public Machine(int typeNumber, Type type, Status status, double cost=25)
+        public Machine(int typeNumber, Type type, Status status=Status.Unavailable, double cost=25)
         {
             if (type == Type.Washer)
             {
