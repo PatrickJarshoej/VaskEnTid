@@ -52,19 +52,23 @@ namespace VaskEnTidLib.Repo
         /// Deletes an entry in the Users database.
         /// </summary>
         /// <param name="id"></param>
-        public void DeleteByID(int id)
+        public void DeleteByUser(User user)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 try
                 {
                     var command = new SqlCommand("DELETE FROM Users WHERE ID = @ID", connection);
-                    command.Parameters.AddWithValue("@ID", id);
+                    var command2 = new SqlCommand("DELETE FROM MapDomicileID WHERE ID = @ID and DomID = @DomID", connection);
+                    command.Parameters.AddWithValue("@ID", user.UserID);
+                    command2.Parameters.AddWithValue("@ID", user.UserID);
+                    command2.Parameters.AddWithValue("@DomID", user.DomicileID[0]);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine("Error ind Repo Delete User");
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
                 finally
