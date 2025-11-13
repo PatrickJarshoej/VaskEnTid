@@ -16,7 +16,7 @@ namespace VaskEnTidLib.Service
         {
             _machineRepo = machineRepo;
         }
-        public void Create(Enum machineType)
+        public void Create(Enum machineType, string MachineTypeNumber)
         {
             throw new NotImplementedException();
 
@@ -40,7 +40,7 @@ namespace VaskEnTidLib.Service
         }
         public void DeleteByID(int machineID)
         {
-            throw new NotImplementedException();
+            _machineRepo.DeleteByID(machineID);
 
         }
         public Machine GetByID(int machineID)
