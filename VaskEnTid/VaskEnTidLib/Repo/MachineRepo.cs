@@ -48,10 +48,36 @@ namespace VaskEnTidLib.Repo
             {
                 try
                 {
-                    var command = new SqlCommand("DELETE FROM Machines WHERE MachineID = @ID", connection);
+                    var command = new SqlCommand("DELETE FROM MapMachineID OUTPUT Inserted.BookingID WHERE MachineID = @ID", connection);
                     command.Parameters.AddWithValue("@ID", id);
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    int bookingID = (int)command.ExecuteScalar();
+
+                    var command2 = new SqlCommand("DELETE FROM Machines WHERE MachineID = @ID", connection);
+                    command2.Parameters.AddWithValue("@ID", id);
+                    command2.ExecuteNonQuery();
+
+                    var command3 = new SqlCommand("SELECT * FROM MapMachineIDs WHERE BookingID = @BookingID", connection);
+                    command3.Parameters.AddWithValue("@BookingID", bookingID);
+                    using (var reader = command3.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            if (bookingID == (int)reader["BookingID"])
+                            {
+                                
+                            }
+                            else if (bookingID != (int)reader["BookingID"])
+                            {
+                                var command4 = new SqlCommand("DELETE FROM Bookings WHERE BookingID = @BookingID", connection);
+                                command3.Parameters.AddWithValue("@BookingID", bookingID);
+                                command2.ExecuteNonQuery();
+
+                            }
+                        }
+
+                    }
+
                 }
                 catch (Exception ex)
                 {

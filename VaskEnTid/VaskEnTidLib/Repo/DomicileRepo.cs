@@ -182,7 +182,7 @@ namespace VaskEnTidLib.Repo
         private List<int> GetUserIDs(int id, SqlConnection connection)
         {
             List<int> ids = new();
-            Debug.WriteLine(id);
+            //Debug.WriteLine(id);
             var command = new SqlCommand("select * from MapDomicileID where DomicileID=@ID", connection);
             command.Parameters.AddWithValue("@ID", id);
             try
@@ -191,7 +191,7 @@ namespace VaskEnTidLib.Repo
                 {
                     while (reader.Read())
                     {
-                        Debug.WriteLine((int)reader["UserID"]);
+                        //Debug.WriteLine((int)reader["UserID"]);
                         ids.Add((int)reader["UserID"]);
                     }
                 }

@@ -18,6 +18,8 @@ namespace VaskEnTidWeb.Pages
         [BindProperty]
         public List<User> Users { get; set; } = new List<User>();
         [BindProperty]
+        public User TempUser { get; set; }
+        [BindProperty]
         public Booking Bookings { get; set; } = new();
         [BindProperty]
         public string CreateFirstName { get; set; } = "John";
@@ -65,8 +67,13 @@ namespace VaskEnTidWeb.Pages
             _userService.CreateUser(CreateFirstName, CreateLastName, CreateEmail, CreatePhone, CreatePassword,CreateAdmin);
             tempUser = _userService.GetIDFromCreation(tempUser);
             _domicileService.AddUserIDbyDomID(tempUser.UserID, CreateDomicileID[0]);
-            return RedirectToPage("/Profile", UserMe);
+            return RedirectToPage("/Index");
 
+        }
+        public void OnPostDeleteUser(User user)
+        {
+            //_userService.DeleteByUser(TempUser);
+            Console.WriteLine($"Delete userID {TempUser.UserID}");
         }
     }
 
