@@ -23,7 +23,7 @@ namespace VaskEnTidLib.Service
                 machineTypeNumber,
                 machineType
                 );
-
+            _machineRepo.Add( theMachine );
         }
         public List<Machine> GetAll()
         {
