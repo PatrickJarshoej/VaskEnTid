@@ -13,14 +13,14 @@
 			<tr>
 				<th>Date and Time</th>
 				<th>Machine</th>
-				<th>Remove booking?</th>
+				@* <th>Remove booking?</th> *@
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td>@Model.Bookings.DateAndTime</td>
 				<td>@Model.Bookings.MachineIDs[0]</td>
-				<td><input type="submit" value="Delete" /></td>
+@* 				<td><input type="submit" value="Delete" /></td> *@
 			</tr>
 		</tbody>
 	</table>
@@ -36,21 +36,27 @@
 					<th>Fornavn</th>
 					<th>Efternavn</th>
 					<th>Bolig</th>
-					<th>Fjern</th>
+					<th>Administrator</th>
+					@* <th>Fjern</th> *@
 				</tr>
 			</thead>
-			@*@foreach (VaskEnTidLib.Model.User SpecificUser in @Model.Users) *@
-			@for (int i = 0; i < @Model.Users.Count; i++)
+			@* 			@for (int i = 0; i < @Model.Users.Count; i++) *@
+			@foreach (VaskEnTidLib.Model.User SpecificUser in @Model.Users)
 			{
+				<form method="post" asp-page-handler="DeleteUser">
 				<tbody>
 					<tr>
-						<td>@Model.Users[i].UserID</td>
-						<td>@Model.Users[i].FirstName</td>
-						<td>@Model.Users[i].LastName</td>
-						<td>@Model.Users[i].DomicileID[0]</td>
-						<td><input type="submit" value="Delete" /></td>
+						<td>@SpecificUser.UserID</td>
+						<td>@SpecificUser.FirstName</td>
+						<td>@SpecificUser.LastName</td>
+						<td>@SpecificUser.DomicileID[0]</td>
+						<td>@SpecificUser.IsAdmin</td>
+						<input type="hidden" name="UserMe" value="@Model.UserMe" asp-for="UserMe" />
+						<input type="hidden" name="TempUser" value="@SpecificUser" asp-for="TempUser" />
+						@* <td><input type="submit" value="Delete" /></td> *@
 					</tr>
 				</tbody>
+				</form>
 			}
 		</table>
 		<h3>Lav Bruger</h3>
@@ -64,6 +70,7 @@
 				<input type="text" asp-for="CreatePassword" class="form-label" value="Password" />
 				<h6>Er det en administrator?</h6>
 				<input type="checkbox" asp-for="CreateAdmin" class="form-check" />
+				<input type="hidden" name="UserMe" value="@Model.UserMe" asp-for="UserMe" />
 				<input type="submit" value="CreateUser" />
 			</div>
 		</form>

@@ -49,5 +49,9 @@ namespace VaskEnTidLib.Service
             User user = _userRepo.CheckPassword(UserID, Password);
             return user;
         }
+        public void DeleteByUser(User user)
+        {
+            _userRepo.DeleteByUser(user);
+        }
     }
 }
